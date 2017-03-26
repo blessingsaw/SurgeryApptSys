@@ -6,7 +6,8 @@ package appointmentsystem;
 
 import java.util.ArrayList;
 
-public class Patient {
+public class Patient
+{
     String patientName;
     String address;
     String mobile;
@@ -14,7 +15,7 @@ public class Patient {
     ArrayList<Appointment> appointmentList;
     ArrayList<Doctor> doctorList;
     
-    String medications="";
+    String medications="Empty";
     
     
     //// patient class constructor
@@ -29,15 +30,24 @@ public class Patient {
     }
     
     ///adding new appointment
-    public void requestAppointment(Appointment a)
+    public boolean requestAppointment(Secretary p,String date,String desc,String from,String to,Doctor d)
     {
-        appointmentList.add(a);
+        return p.finalizeRequestAppointment(desc,date,from,to,this,d);
+        
+    }
+    
+      ///adding new appointment
+    public boolean chngrequestAppointment(Secretary p,String date,String desc,String from,String to,Doctor d)
+    {
+        return p.finalizechngRequestAppointment(desc,date,from,to,this,d);
+        
     }
     
     //// delete aappointment
-    public void cancelAppointment(Appointment a)
+    public boolean cancelAppointment(int a,Secretary p)
     {
-        appointmentList.remove(a);
+        return p.cancelfinalizeAppointment(this,a);
+        
     }
     
     /// return appointment list for the specified patient

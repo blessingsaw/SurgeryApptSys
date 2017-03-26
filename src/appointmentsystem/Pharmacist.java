@@ -4,11 +4,14 @@ package appointmentsystem;
 public class Pharmacist 
 {
     String pharmacistName;
-    int pharmacistId;
+    String pharmacistId;
     public Pharmacist(String name,String id)
     {
         pharmacistName=name;
-        pharmacistId=Integer.parseInt(id);
+        pharmacistId=id;
     }
+    
+   
+    
     
 }

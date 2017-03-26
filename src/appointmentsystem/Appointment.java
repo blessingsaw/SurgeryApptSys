@@ -7,20 +7,35 @@ package appointmentsystem;
 
 public class Appointment 
 {
-    int app_id;
     String desc;
-    String from,to;
-    
+    String date,from,to;
     Patient patient;
     Doctor doctor;
-    public Appointment(int id,String d,String f,String t,Patient pa,Doctor da)
+    
+    public Appointment(String d,String datepar,String f,String t,Patient pa,Doctor da)
     {
-        app_id=id;
+        date=datepar;
         desc=d;
         from=f;
         to=t;
         patient=pa;
         doctor=da;
-        
+        doctor.bookSlot(pa,date, from, to);
+
     }
+    
+    public String description()
+    {
+        return desc;
+    }
+    
+    public String from()
+    {
+        return from;
+    }
+    public  String to()
+    {
+        return to;
+    }
+            
 }
