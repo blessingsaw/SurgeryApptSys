@@ -30,7 +30,7 @@ public class Patient
     }
     
     ///adding new appointment
-    public boolean requestAppointment(Secretary p,String date,String desc,String from,String to,Doctor d)
+    public boolean requestAppointment(Secretary p,String desc,String date,String from,String to,Doctor d)
     {
         return p.finalizeRequestAppointment(desc,date,from,to,this,d);
         

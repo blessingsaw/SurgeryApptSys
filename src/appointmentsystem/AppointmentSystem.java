@@ -44,7 +44,7 @@ public class AppointmentSystem extends JFrame
     {
         
         //// initialize preregistered member
-        patientList.add(new Patient("p1name","Mumbai","Mob","p1"));
+        patientList.add(new Patient("p1n","Mumbai","Mob","p1"));
         patientList.add(new Patient("p2n","Mumbai","Mob2","p2"));
         patientList.add(new Patient("p3n","Mumbai","Mob3","p3"));
         patientList.add(new Patient("p4n","Mumbai","Mob4","p4"));
@@ -56,10 +56,9 @@ public class AppointmentSystem extends JFrame
         patientList.add(new Patient("p10n","Mumbai","Mob2","p10"));
         
         secretaryList.add(new Secretary("Secretart1","s1"));
-        secretaryList.add(new Secretary("Secretart2","s2"));
-        secretaryList.add(new Secretary("Secretart3","s3"));
         
-        pharmaList.add(new Pharmacist("Pharmacist1", "Ph1"));
+        
+        pharmaList.add(new Pharmacist("Pharmacist1", "ph1"));
         
 
         doctorList.add(new Doctor("d1n","d1", "Dentist"));
@@ -67,21 +66,21 @@ public class AppointmentSystem extends JFrame
         doctorList.add(new Doctor("d3n","d3", "Medicine"));
         
         
-        patientList.get(0).appointmentList.add(new Appointment("Heart Problm","24/3/2017", "17:00","17:30",patientList.get(0),doctorList.get(0)));
-        patientList.get(1).appointmentList.add(new Appointment("Heart Problm","24/3/2017","17:31","18:30",patientList.get(1),doctorList.get(0)));
-        patientList.get(2).appointmentList.add(new Appointment("Heart Problm","24/3/2017","13:00","13:30",patientList.get(2),doctorList.get(0)));
-        patientList.get(3).appointmentList.add(new Appointment("Heart Problm","24/3/2017", "13:30","14:00",patientList.get(3),doctorList.get(0)));
-        patientList.get(4).appointmentList.add(new Appointment("Heart Problm","24/3/2017", "14:00","14:30",patientList.get(4),doctorList.get(0)));
-        patientList.get(5).appointmentList.add(new Appointment("Heart Problm","24/3/2017","14:30","15:00",patientList.get(5),doctorList.get(0)));
-        patientList.get(6).appointmentList.add(new Appointment("Heart Problm","24/3/2017", "14:30","15:00",patientList.get(6),doctorList.get(0)));
-        patientList.get(7).appointmentList.add(new Appointment("Stomach Problm","24/3/2017","12:00","12:30",patientList.get(7),doctorList.get(1)));
-        patientList.get(5).appointmentList.add(new Appointment("Stomach Problm","25/3/2017", "12:30","13:00",patientList.get(5),doctorList.get(0)));
-        patientList.get(0).appointmentList.add(new Appointment("Stomach Problm","25/3/2017","13:30","14:00",patientList.get(0),doctorList.get(0)));
-        patientList.get(1).appointmentList.add(new Appointment("Stomach Problm","25/3/2017","13:30","14:00",patientList.get(1),doctorList.get(1)));
-        patientList.get(2).appointmentList.add(new Appointment("Stomach Problm","25/3/2017","14:00","14:30",patientList.get(2),doctorList.get(1)));
-        patientList.get(7).appointmentList.add(new Appointment("Brain Problm","26/3/2017","13:30","14:00",patientList.get(7),doctorList.get(2)));
-        patientList.get(8).appointmentList.add(new Appointment("Brain Problm","26/3/2017","13:30","14:00",patientList.get(8),doctorList.get(2)));
-        patientList.get(9).appointmentList.add(new Appointment("Brain Problm","26/3/2017","13:30","14:00",patientList.get(9),doctorList.get(2)));
+        patientList.get(0).requestAppointment(secretaryList.get(0),"Heart Problm","29/3/2017", "17:00","17:30",doctorList.get(0));
+        patientList.get(1).requestAppointment(secretaryList.get(0),"Heart Problm","29/3/2017","17:31","18:30",doctorList.get(0));
+        patientList.get(2).requestAppointment(secretaryList.get(0),"Heart Problm","29/3/2017","13:00","13:30",doctorList.get(0));
+        patientList.get(3).requestAppointment(secretaryList.get(0),"Heart Problm","24/3/2017", "13:30","14:00",doctorList.get(0));
+        patientList.get(4).requestAppointment(secretaryList.get(0),"Heart Problm","27/3/2017", "14:00","14:30",doctorList.get(0));
+        patientList.get(5).requestAppointment(secretaryList.get(0),"Heart Problm","27/3/2017","14:30","15:00",doctorList.get(0));
+        patientList.get(6).requestAppointment(secretaryList.get(0),"Heart Problm","27/3/2017", "14:30","15:00",doctorList.get(0));
+        patientList.get(7).requestAppointment(secretaryList.get(0),"Stomach Problm","27/3/2017","12:00","12:30",doctorList.get(1));
+        patientList.get(5).requestAppointment(secretaryList.get(0),"Stomach Problm","25/3/2017", "12:30","13:00",doctorList.get(0));
+        patientList.get(0).requestAppointment(secretaryList.get(0),"Stomach Problm","25/3/2017","13:30","14:00",doctorList.get(1));
+        patientList.get(1).requestAppointment(secretaryList.get(0),"Stomach Problm","25/3/2017","13:30","14:00",doctorList.get(1));
+        patientList.get(2).requestAppointment(secretaryList.get(0),"Stomach Problm","25/3/2017","14:00","14:30",doctorList.get(1));
+        patientList.get(7).requestAppointment(secretaryList.get(0),"Brain Problm","26/3/2017","13:30","14:00",doctorList.get(2));
+        patientList.get(8).requestAppointment(secretaryList.get(0),"Brain Problm","26/3/2017","13:30","14:00",doctorList.get(2));
+        patientList.get(9).requestAppointment(secretaryList.get(0),"Brain Problm","26/3/2017","13:30","14:00",doctorList.get(2));
         
         //// adding Menu
         addmenu.add(addPatientItem);
@@ -358,7 +357,57 @@ public class AppointmentSystem extends JFrame
 
         /// addding Login Button
         JButton loginButton=new JButton("Login");
+        JButton reportButton=new JButton("Report");
         add(loginButton);
+        add(reportButton);
+        
+        reportButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) 
+            {
+                System.out.println("*******************  Patient Report ***********************");
+                
+                for(int i=0;i<patientList.size();i++)
+                {
+                    Patient temp=patientList.get(i);
+                    System.out.println("PatientId:"+temp.patientId+"\tPatientName:"+temp.patientName+"\tAddress:"+temp.address+"\tMedications:"+temp.medications+"\tMobile:"+temp.mobile);
+                    System.out.println("\n***********  Appointment List for the Patient:"+temp.patientName+" ***********");
+                    for(int s=0;s<temp.appointmentList.size();s++)
+                    {
+                        Appointment atemp=temp.appointmentList.get(s);
+                        System.out.println(atemp.date+"\t"+atemp.from+"\t"+atemp.to+"\t"+atemp.desc+"\t"+atemp.doctor.doctorName);
+                    }
+                
+                    System.out.println("\n");
+                }
+                
+                System.out.println("\n**************** Doctor Report ****************");
+                for(int d=0;d<doctorList.size();d++)
+                {
+                    Doctor tDoct=doctorList.get(d);
+                    System.out.println("ID:"+tDoct.doctorId+"\tName:"+tDoct.doctorName+"\tType:"+tDoct.type);
+                
+                }
+                
+                System.out.println("\n************** Total Appointment Report *************");
+                
+                
+                for(int p=0;p<patientList.size();p++)
+                {
+                    ArrayList<Appointment> tempList=patientList.get(p).appointmentList;
+                    
+                    for(int t=0;t<tempList.size();t++)
+                    {
+                        Appointment tAppnt=tempList.get(t);
+                        System.out.println("Date:"+tAppnt.date+"\tFrom:"+tAppnt.from+"\tTo:"+tAppnt.to+"\tDescription:"+tAppnt.desc+"\tStatus:"+tAppnt.type);
+                    
+                    }
+                
+                }
+            }
+        });
+        
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) 
@@ -696,7 +745,6 @@ public class AppointmentSystem extends JFrame
                                 patientFrame.setLayout(new FlowLayout());
                                 patientFrame.setSize(500,500);
                                 loginDialog.setVisible(false);
-                                
                                 patientFrame.setVisible(true);
                             }
                             else
@@ -767,10 +815,12 @@ public class AppointmentSystem extends JFrame
                                                         JOptionPane.showMessageDialog(null,"Completed Appointment Successfully");
                                                         model.remove(list.getSelectedIndex());
                                                         frame.revalidate();
+                                                        frame.dispose();
                                                     }
                                                     else
                                                     {
                                                         JOptionPane.showMessageDialog(null,"Complete Appointment Unsuccessful");
+                                                        frame.dispose();
                                                     }
                                                 }
                                                 catch(Exception ee)
@@ -791,12 +841,10 @@ public class AppointmentSystem extends JFrame
                                             {
                                                 String notes=JOptionPane.showInputDialog("Enter Notes For the Patient");
                                                 fd.makeNotes(list.getSelectedIndex(),notes);
+                                                frame.revalidate();
                                             }
                                         });
                                         
-                                        
-                                           
-
                                        jp.add(pane, BorderLayout.NORTH);
                                        jp.add(completeButton, BorderLayout.WEST);
                                        jp.add(makeMedicationsButton,BorderLayout.EAST);
@@ -811,6 +859,8 @@ public class AppointmentSystem extends JFrame
                                 doctorFrame.setLayout(new FlowLayout());
                                 doctorFrame.setSize(500,500);
                                 doctorFrame.setVisible(true);
+                                loginDialog.setVisible(false);
+                                
                             }
                             else
                             {
@@ -822,74 +872,189 @@ public class AppointmentSystem extends JFrame
                         else if(index==2)
                         {
                             boolean flag=false;
-                            Secretary s;
+                            Secretary s=null;
+                            final Secretary fs;
                             for(int pp=0;pp<secretaryList.size();pp++)
                             {
                                 s=secretaryList.get(pp);
                                 if(s.id.equals(namefield.getText()))
                                 {
                                     flag=true;
+                                    break;
                                 }
                                 
                             }
                             
                             if(flag)
                             {
-                                JFrame patientFrame=new JFrame("Secretary Window");
+                                fs=s;
+                                JFrame secretaryFrame=new JFrame("Secretary Window");
                                 JButton viewPatientbutton=new JButton("View Requested Appointment List");
-
                                 viewPatientbutton.addActionListener(new ActionListener() {
                                     @Override
                                     public void actionPerformed(ActionEvent e) 
                                     {
+                                        final JFrame frame = new JFrame("View Appointment");   
+                                        JPanel jp=new JPanel(new BorderLayout());
+                                        final JList list;
+                                        final DefaultListModel model;
                                         
-                                         //p.requestAppointment();
-                                    }
+                                        model = new DefaultListModel();
+                                        list = new JList(model);
+                                        JScrollPane pane = new JScrollPane(list);
+                                        JButton completeButton = new JButton("Finalize Appointment");
+                                        
+                                        
+                                        model.addElement("Patient ---"+"Mobile ---"+"Doctor ---"+"Type");
+                                        
+                                        //System.out.println("Size:"+fs.secappntmentList.size());
+                                        for (int i = 0; i < fs.secappntmentList.size(); i++)
+                                        {
+                                            model.addElement(fs.secappntmentList.get(i).patient.patientName+"---"+fs.secappntmentList.get(i).patient.mobile+"---"+fs.secappntmentList.get(i).doctor.doctorName+" ----"+fs.secappntmentList.get(i).type);
+                                        
+                                        }
+                                        
+                                        
+                                        completeButton.addActionListener(new ActionListener() {
+
+                                            @Override
+                                            public void actionPerformed(ActionEvent e)
+                                            {
+                                               try
+                                               {
+                                                   model.remove(list.getSelectedIndex());
+                                                   frame.revalidate();
+                                                   JOptionPane.showMessageDialog(null,"Finalize Appointment Successfully");
+                                                   
+                                                   frame.dispose();
+                                               }
+                                               catch(Exception ee)
+                                               {
+                                                   JOptionPane.showMessageDialog(null,"Please Select an Appointment to finalize appointment");
+                                                   frame.dispose();
+                                               }    
+                                                    
+                                            
+                                            }
+                                        });
+                                        
+                                        jp.add(pane, BorderLayout.NORTH);
+                                        jp.add(completeButton, BorderLayout.WEST);
+                                        frame.setContentPane(jp);
+                                        frame.setSize(700,230);
+                                        frame.setVisible(true);
+                                              
+                                         }
+                                  
+                                    
                                 });
 
-                                patientFrame.add(viewPatientbutton);
-                                setLayout(new FlowLayout());
-                                setSize(500,500);
-                                setVisible(true);
+                                secretaryFrame.add(viewPatientbutton);
+                                secretaryFrame.setLayout(new FlowLayout());
+                                secretaryFrame.setSize(500,500);
+                                secretaryFrame.setVisible(true);
+                                loginDialog.setVisible(false);
+                                
                             }
                             else
                             {
                                 JOptionPane.showMessageDialog(null,"The Secretary ID is not registered!", "Error", JOptionPane.ERROR_MESSAGE);
+                                
                             }
                         }
                         //Pharmacist
                         else if(index==3)
                         {
                             boolean flag=false;
-                            Pharmacist d;
+                            Pharmacist ph=null;
+                            final Pharmacist fph;
                             for(int pp=0;pp<pharmaList.size();pp++)
                             {
-                                d=pharmaList.get(pp);
-                                if(d.pharmacistId.equals(namefield.getText()))
+                                ph=pharmaList.get(pp);
+                                if(ph.pharmacistId.equals(namefield.getText()))
                                 {
                                     flag=true;
+                                    break;
                                 }
-                                
                             }
                             
                             if(flag)
                             {
-                                JFrame patientFrame=new JFrame("Pharmacist Window");
-                                JButton viewPatientbutton=new JButton("View Medication List For Patient");
+                                JFrame pharmacistFrame=new JFrame("Pharmacist Window");
+                                JButton viewPharmacistbutton=new JButton("View Medication List For Patient");
 
-                                viewPatientbutton.addActionListener(new ActionListener() {
+                                viewPharmacistbutton.addActionListener(new ActionListener() {
                                     @Override
                                     public void actionPerformed(ActionEvent e) 
                                     {
+                                        final JFrame frame = new JFrame("View Medication List For Patient");   
+                                        JPanel jp=new JPanel(new BorderLayout());
+                                        final JList list;
+                                        final DefaultListModel model;
                                         
-                                         //p.requestAppointment();
+                                        model = new DefaultListModel();
+                                        list = new JList(model);
+                                        JScrollPane pane = new JScrollPane(list);
+                                        JButton completeButton = new JButton("Deliver Medications");
+                                        
+                                        
+                                        model.addElement("Patient ---"+"Mobile ---"+"Medications ---");
+                                        
+                                        final ArrayList<Integer> al=new ArrayList<Integer>();
+                                        
+                                        for (int i = 0; i < patientList.size(); i++)
+                                        {
+                                            if(!patientList.get(i).medications.equals("Empty"))
+                                            {
+                                                al.add(i);
+                                                model.addElement(patientList.get(i).patientName+"---"+patientList.get(i).mobile+"---"+patientList.get(i).medications);
+                                            }
+                                        
+                                        }
+                                        
+                                        
+                                        completeButton.addActionListener(new ActionListener() {
+
+                                            @Override
+                                            public void actionPerformed(ActionEvent e)
+                                            {
+                                               try
+                                               {
+                                                   int index=list.getSelectedIndex();
+                                                   model.remove(index);
+                        
+                                                   //System.out.println("s:"+index);
+                                                   patientList.remove(al.get(index-1));
+                                                   
+                                                   frame.revalidate();
+                                                   JOptionPane.showMessageDialog(null,"Medication Giving Successfully");
+                                                   
+                                                   frame.dispose();
+                                               }
+                                               catch(Exception ee)
+                                               {
+                                                   JOptionPane.showMessageDialog(null,"Please Select an medications from the list to give medications"+ee);
+                                                   frame.dispose();
+                                               }
+                                                    
+                                            
+                                            }
+                                        });
+                                        
+                                        jp.add(pane, BorderLayout.NORTH);
+                                        jp.add(completeButton, BorderLayout.WEST);
+                                        frame.setContentPane(jp);
+                                        frame.setSize(700,230);
+                                        frame.setVisible(true);
+                                        
                                     }
                                 });
 
-                                patientFrame.add(viewPatientbutton);
-                                setLayout(new FlowLayout());
-                                setSize(500,500);
-                                setVisible(true);
+                                pharmacistFrame.add(viewPharmacistbutton);
+                                pharmacistFrame.setLayout(new FlowLayout());
+                                pharmacistFrame.setSize(500,500);
+                                pharmacistFrame.setVisible(true);
+                                loginDialog.setVisible(false);
                             }
                             else
                             {

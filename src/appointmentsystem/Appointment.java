@@ -12,6 +12,7 @@ public class Appointment
     Patient patient;
     Doctor doctor;
     
+    String type;
     public Appointment(String d,String datepar,String f,String t,Patient pa,Doctor da)
     {
         date=datepar;
@@ -20,8 +21,9 @@ public class Appointment
         to=t;
         patient=pa;
         doctor=da;
-        doctor.bookSlot(pa,date, from, to);
-
+        type="requested";
+        
+        
     }
     
     public String description()
