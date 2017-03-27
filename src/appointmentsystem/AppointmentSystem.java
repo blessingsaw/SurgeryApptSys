@@ -8,7 +8,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import static java.awt.image.ImageObserver.WIDTH;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.crypto.SecretKey;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -34,6 +39,11 @@ public class AppointmentSystem extends JFrame
     JMenuItem addDoctorItem=new JMenuItem("Add Doctor Item");
     JMenuItem addPharmacistItem=new JMenuItem("Add Pharmacist");
     JMenuItem addSecretaryItem=new JMenuItem("Add Secretary");
+    
+    JMenu reportMenu=new JMenu("Report");
+    JMenuItem preportItem=new JMenuItem("Patient Report");
+    JMenuItem dreportItem=new JMenuItem("Doctor Report");
+    JMenuItem areportItem=new JMenuItem("Appointment Report");
     
     ArrayList<Patient> patientList=new ArrayList<Patient>();
     ArrayList<Doctor> doctorList=new ArrayList<Doctor>();
@@ -87,11 +97,175 @@ public class AppointmentSystem extends JFrame
         addmenu.add(addDoctorItem);
         addmenu.add(addPharmacistItem);
         addmenu.add(addSecretaryItem);
+        
+        reportMenu.add(preportItem);
+        reportMenu.add(dreportItem);
+        reportMenu.add(areportItem);
+        
         setJMenuBar(jm);
         jm.add(addmenu);
+        jm.add(reportMenu);
         //// Login Dialog
         JDialog loginDialog=new JDialog();
         
+        
+        dreportItem.addActionListener(new ActionListener() 
+        {
+
+            @Override
+            public void actionPerformed(ActionEvent e) 
+            {
+               
+                final JFrame frame = new JFrame("Doctor Report Window");   
+                JPanel jp=new JPanel(new BorderLayout());
+                final JList list;
+                final DefaultListModel model;
+                                        
+                model = new DefaultListModel();
+                list = new JList(model);
+                JScrollPane pane = new JScrollPane(list);       
+                jp.add(pane);
+                frame.setContentPane(jp);
+                frame.setSize(800,600);
+                frame.setVisible(true);
+                
+                for(int d=0;d<doctorList.size();d++)
+                {
+                    Doctor tDoct=doctorList.get(d);
+                    model.addElement("ID:"+tDoct.doctorId+"\tName:"+tDoct.doctorName+"\tType:"+tDoct.type);
+                
+                }
+                
+               
+                
+            }
+        });
+        preportItem.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) 
+            {
+                String startdate=JOptionPane.showInputDialog(null,"Please Enter start Date(dd/mm/yyyy)");
+                String endDate=JOptionPane.showInputDialog(null,"Please Enter End Date(dd/mm/yyyy)");
+                Date date1 = null,date2=null;
+                
+                try 
+                {
+                    date1=new SimpleDateFormat("dd/MM/yyyy").parse(startdate);
+                    date2=new SimpleDateFormat("dd/MM/yyyy").parse(endDate);
+                } 
+                catch (ParseException ex) 
+                {
+                    Logger.getLogger(AppointmentSystem.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                final JFrame frame = new JFrame("Patient Report Window");   
+                JPanel jp=new JPanel(new BorderLayout());
+                final JList list;
+                final DefaultListModel model;
+                                        
+                model = new DefaultListModel();
+                list = new JList(model);
+                JScrollPane pane = new JScrollPane(list);       
+                jp.add(pane);
+                frame.setContentPane(jp);
+                frame.setSize(800,600);
+                frame.setVisible(true);
+                
+                for(int i=0;i<patientList.size();i++)
+                {
+                    Patient temp=patientList.get(i);
+                    model.addElement("PatientId:"+temp.patientId+"  PatientName: "+temp.patientName+"  Address:"+temp.address+"  Medications:"+temp.medications+"  Mobile:"+temp.mobile);
+                    model.addElement("\n***********  Appointment List for the Patient:"+temp.patientName+" ***********");
+                    
+                    for(int s=0;s<temp.appointmentList.size();s++)
+                    {
+                        Date date=null;
+                        Appointment atemp=temp.appointmentList.get(s);
+                        try
+                        {
+                            date=new SimpleDateFormat("dd/MM/yyyy").parse(atemp.date);
+                        }
+                        catch(Exception ee)
+                        {
+                        
+                        }
+                        
+                        //System.out.println(date+"  "+date1+"  "+date2+" "+date1.before(date)+"  "+date2.after(date));
+                        
+                        
+                        if(date1.before(date) && date2.after(date))
+                        {
+                            
+                            model.addElement("Date:"+atemp.date+"  From:"+atemp.from+" To:"+atemp.to+" Description:"+atemp.desc+"  DoctorName:"+atemp.doctor.doctorName);
+                        }
+                        
+                    }
+                
+                    model.addElement("\n");
+                }
+            }
+        });
+        
+        
+        
+        areportItem.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) 
+            {
+                String startdate=JOptionPane.showInputDialog(null,"Please Enter start Date(dd/mm/yyyy)");
+                String endDate=JOptionPane.showInputDialog(null,"Please Enter End Date(dd/mm/yyyy)");
+                Date date1 = null,date2=null;
+                
+                try 
+                {
+                    date1=new SimpleDateFormat("dd/MM/yyyy").parse(startdate);
+                    date2=new SimpleDateFormat("dd/MM/yyyy").parse(endDate);
+                } 
+                catch (ParseException ex) 
+                {
+                    Logger.getLogger(AppointmentSystem.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                final JFrame frame = new JFrame("Patient Report Window");   
+                JPanel jp=new JPanel(new BorderLayout());
+                final JList list;
+                final DefaultListModel model;
+                                        
+                model = new DefaultListModel();
+                list = new JList(model);
+                JScrollPane pane = new JScrollPane(list);       
+                jp.add(pane);
+                frame.setContentPane(jp);
+                frame.setSize(800,600);
+                frame.setVisible(true);
+                
+                for(int p=0;p<patientList.size();p++)
+                {
+                    ArrayList<Appointment> tempList=patientList.get(p).appointmentList;
+                    
+                    for(int t=0;t<tempList.size();t++)
+                    {
+                        Date date=null;
+                        Appointment tAppnt=tempList.get(t);
+                        try
+                        {
+                            date=new SimpleDateFormat("dd/MM/yyyy").parse(tAppnt.date);
+                        }
+                        catch(Exception ee)
+                        {
+                        
+                        }
+                        if(date1.before(date) && date2.after(date))
+                        {
+                            model.addElement("Date:"+tAppnt.date+"  From:"+tAppnt.from+"  To:"+tAppnt.to+"  Description:"+tAppnt.desc+"  Status:"+tAppnt.type);
+                        }
+                    }
+                
+                }
+            }
+        });
         
         /// end of Login Dialog
         
@@ -357,10 +531,10 @@ public class AppointmentSystem extends JFrame
 
         /// addding Login Button
         JButton loginButton=new JButton("Login");
-        JButton reportButton=new JButton("Report");
-        add(loginButton);
-        add(reportButton);
         
+        add(loginButton);
+       
+        /* 
         reportButton.addActionListener(new ActionListener() {
 
             @Override
@@ -407,7 +581,7 @@ public class AppointmentSystem extends JFrame
                 }
             }
         });
-        
+        */
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) 
