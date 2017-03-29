@@ -33,17 +33,7 @@ import javax.swing.JTextField;
 
 public class AppointmentSystem extends JFrame
 {
-    JMenuBar jm=new JMenuBar();
-    JMenu addmenu=new JMenu("Add Menu");
-    JMenuItem addPatientItem=new JMenuItem("Add Patient to System");
-    JMenuItem addDoctorItem=new JMenuItem("Add Doctor Item");
-    JMenuItem addPharmacistItem=new JMenuItem("Add Pharmacist");
-    JMenuItem addSecretaryItem=new JMenuItem("Add Secretary");
-    
-    JMenu reportMenu=new JMenu("Report");
-    JMenuItem preportItem=new JMenuItem("Patient Report");
-    JMenuItem dreportItem=new JMenuItem("Doctor Report");
-    JMenuItem areportItem=new JMenuItem("Appointment Report");
+ 
     
     ArrayList<Patient> patientList=new ArrayList<Patient>();
     ArrayList<Doctor> doctorList=new ArrayList<Doctor>();
@@ -92,500 +82,10 @@ public class AppointmentSystem extends JFrame
         patientList.get(8).requestAppointment(secretaryList.get(0),"Brain Problm","26/3/2017","13:30","14:00",doctorList.get(2));
         patientList.get(9).requestAppointment(secretaryList.get(0),"Brain Problm","26/3/2017","13:30","14:00",doctorList.get(2));
         
-        //// adding Menu
-        addmenu.add(addPatientItem);
-        addmenu.add(addDoctorItem);
-        addmenu.add(addPharmacistItem);
-        addmenu.add(addSecretaryItem);
-        
-        reportMenu.add(preportItem);
-        reportMenu.add(dreportItem);
-        reportMenu.add(areportItem);
-        
-        setJMenuBar(jm);
-        jm.add(addmenu);
-        jm.add(reportMenu);
-        //// Login Dialog
-        JDialog loginDialog=new JDialog();
-        
-        
-        dreportItem.addActionListener(new ActionListener() 
-        {
-
-            @Override
-            public void actionPerformed(ActionEvent e) 
-            {
-               
-                final JFrame frame = new JFrame("Doctor Report Window");   
-                JPanel jp=new JPanel(new BorderLayout());
-                final JList list;
-                final DefaultListModel model;
-                                        
-                model = new DefaultListModel();
-                list = new JList(model);
-                JScrollPane pane = new JScrollPane(list);       
-                jp.add(pane);
-                frame.setContentPane(jp);
-                frame.setSize(800,600);
-                frame.setVisible(true);
-                
-                for(int d=0;d<doctorList.size();d++)
-                {
-                    Doctor tDoct=doctorList.get(d);
-                    model.addElement("ID:"+tDoct.doctorId+"\tName:"+tDoct.doctorName+"\tType:"+tDoct.type);
-                
-                }
-                
-               
-                
-            }
-        });
-        preportItem.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) 
-            {
-                String startdate=JOptionPane.showInputDialog(null,"Please Enter start Date(dd/mm/yyyy)");
-                String endDate=JOptionPane.showInputDialog(null,"Please Enter End Date(dd/mm/yyyy)");
-                Date date1 = null,date2=null;
-                
-                try 
-                {
-                    date1=new SimpleDateFormat("dd/MM/yyyy").parse(startdate);
-                    date2=new SimpleDateFormat("dd/MM/yyyy").parse(endDate);
-                } 
-                catch (ParseException ex) 
-                {
-                    Logger.getLogger(AppointmentSystem.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-                final JFrame frame = new JFrame("Patient Report Window");   
-                JPanel jp=new JPanel(new BorderLayout());
-                final JList list;
-                final DefaultListModel model;
-                                        
-                model = new DefaultListModel();
-                list = new JList(model);
-                JScrollPane pane = new JScrollPane(list);       
-                jp.add(pane);
-                frame.setContentPane(jp);
-                frame.setSize(800,600);
-                frame.setVisible(true);
-                
-                for(int i=0;i<patientList.size();i++)
-                {
-                    Patient temp=patientList.get(i);
-                    model.addElement("PatientId:"+temp.patientId+"  PatientName: "+temp.patientName+"  Address:"+temp.address+"  Medications:"+temp.medications+"  Mobile:"+temp.mobile);
-                    model.addElement("\n***********  Appointment List for the Patient:"+temp.patientName+" ***********");
-                    
-                    for(int s=0;s<temp.appointmentList.size();s++)
-                    {
-                        Date date=null;
-                        Appointment atemp=temp.appointmentList.get(s);
-                        try
-                        {
-                            date=new SimpleDateFormat("dd/MM/yyyy").parse(atemp.date);
-                        }
-                        catch(Exception ee)
-                        {
-                        
-                        }
-                        
-                        //System.out.println(date+"  "+date1+"  "+date2+" "+date1.before(date)+"  "+date2.after(date));
-                        
-                        
-                        if(date1.before(date) && date2.after(date))
-                        {
-                            
-                            model.addElement("Date:"+atemp.date+"  From:"+atemp.from+" To:"+atemp.to+" Description:"+atemp.desc+"  DoctorName:"+atemp.doctor.doctorName);
-                        }
-                        
-                    }
-                
-                    model.addElement("\n");
-                }
-            }
-        });
-        
-        
-        
-        areportItem.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) 
-            {
-                String startdate=JOptionPane.showInputDialog(null,"Please Enter start Date(dd/mm/yyyy)");
-                String endDate=JOptionPane.showInputDialog(null,"Please Enter End Date(dd/mm/yyyy)");
-                Date date1 = null,date2=null;
-                
-                try 
-                {
-                    date1=new SimpleDateFormat("dd/MM/yyyy").parse(startdate);
-                    date2=new SimpleDateFormat("dd/MM/yyyy").parse(endDate);
-                } 
-                catch (ParseException ex) 
-                {
-                    Logger.getLogger(AppointmentSystem.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-                final JFrame frame = new JFrame("Patient Report Window");   
-                JPanel jp=new JPanel(new BorderLayout());
-                final JList list;
-                final DefaultListModel model;
-                                        
-                model = new DefaultListModel();
-                list = new JList(model);
-                JScrollPane pane = new JScrollPane(list);       
-                jp.add(pane);
-                frame.setContentPane(jp);
-                frame.setSize(800,600);
-                frame.setVisible(true);
-                
-                for(int p=0;p<patientList.size();p++)
-                {
-                    ArrayList<Appointment> tempList=patientList.get(p).appointmentList;
-                    
-                    for(int t=0;t<tempList.size();t++)
-                    {
-                        Date date=null;
-                        Appointment tAppnt=tempList.get(t);
-                        try
-                        {
-                            date=new SimpleDateFormat("dd/MM/yyyy").parse(tAppnt.date);
-                        }
-                        catch(Exception ee)
-                        {
-                        
-                        }
-                        if(date1.before(date) && date2.after(date))
-                        {
-                            model.addElement("Date:"+tAppnt.date+"  From:"+tAppnt.from+"  To:"+tAppnt.to+"  Description:"+tAppnt.desc+"  Status:"+tAppnt.type);
-                        }
-                    }
-                
-                }
-            }
-        });
-        
-        /// end of Login Dialog
-        
-        addPatientItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) 
-            {
-                final JDialog patientDialog=new JDialog();
-              
-                patientDialog.setLayout(null);
-                
-                
-                JLabel nameLabel=new JLabel("Enter Name:");
-                final JTextField namefield=new JTextField();
-                JLabel addrLabel=new JLabel("Enter Address");
-                final JTextField addrField=new JTextField();
-                JLabel idLabel=new JLabel("Enter ID:");
-                final JTextField idfield=new JTextField();
-                JLabel mobLabel=new JLabel("Enter Mobile:");
-                final JTextField mobfield=new JTextField();
-                
-                JButton submitButton=new JButton("Add");
-                
-                nameLabel.setBounds(10, 5,200,25);
-                namefield.setBounds(100,5,200,25);
-                
-                idLabel.setBounds(10,30,200,25);
-                idfield.setBounds(100, 30,200,25);
-                
-                addrLabel.setBounds(10,50,200,25);
-                addrField.setBounds(100,50,200,25);
-                
-                mobLabel.setBounds(10,70,200,25);
-                mobfield.setBounds(100,70,200,25);
-                
-                submitButton.setBounds(100,110,200,60);
-                
-                
-   
-                patientDialog.add(submitButton);
-                patientDialog.add(nameLabel);
-                patientDialog.add(namefield);
-                patientDialog.add(idLabel);
-                patientDialog.add(idfield);
-                patientDialog.add(addrLabel);
-                patientDialog.add(addrField);
-                patientDialog.add(mobLabel);
-                patientDialog.add(mobfield);
-                patientDialog.add(submitButton);
-                patientDialog.setSize(350,350);
-                
-              
-  
-                patientDialog.setResizable(false);
-                patientDialog.setLocationRelativeTo(null);
-                patientDialog.setVisible(true);
-                
-                
-                submitButton.addActionListener(new ActionListener() 
-                {
-                    @Override
-                    public void actionPerformed(ActionEvent e) 
-                    {
-                        if(namefield.getText().equals("") || addrField.getText().equals("") || mobfield.getText().equals("") || idfield.getText().equals(""))
-                        {
-                            JOptionPane.showMessageDialog(null,"Please complete all the field");
-                        }
-                        else
-                        {
-                            patientDialog.dispose();
-                            Patient p=new Patient(namefield.getText(), addrField.getText(),mobfield.getText(),idfield.getText());
-                            patientList.add(p);
-                        }
-                        
-                    }
-                });
-                
-                
-                
-            }
-        });
-        
-        /// end of Login Dialog
-        
-        addDoctorItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) 
-            {
-                final JDialog doctDialog=new JDialog();
-                doctDialog.setLayout(null);
-                JLabel nameLabel=new JLabel("Enter Name:");
-                final JTextField namefield=new JTextField();
-                JLabel idLabel=new JLabel("Enter ID");
-                final JTextField idField=new JTextField();
-                JLabel typeLabel=new JLabel("Enter Type:");
-                final JTextField typefield=new JTextField();
-                JButton submitButton=new JButton("Add");
-                
-                nameLabel.setBounds(10, 5,200,25);
-                namefield.setBounds(100,5,200,25);
-                
-                idLabel.setBounds(10,30,200,25);
-                idField.setBounds(100, 30,200,25);
-                
-                typeLabel.setBounds(10,50,200,25);
-                typefield.setBounds(100,50,200,25);
-              
-                
-                submitButton.setBounds(100,110,200,60);
-                
-                
-   
-                doctDialog.add(submitButton);
-                doctDialog.add(nameLabel);
-                doctDialog.add(namefield);
-                doctDialog.add(idLabel);
-                doctDialog.add(idField);
-                doctDialog.add(typeLabel);
-                doctDialog.add(typefield);
-                doctDialog.add(submitButton);
-                doctDialog.setSize(350,350);
-                
-              
-  
-                doctDialog.setResizable(false);
-                doctDialog.setLocationRelativeTo(null);
-                doctDialog.setVisible(true);
-                
-                
-                submitButton.addActionListener(new ActionListener() 
-                {
-                    @Override
-                    public void actionPerformed(ActionEvent e) 
-                    {
-                        if(namefield.getText().equals("") || idField.getText().equals("") || typefield.getText().equals(""))
-                        {
-                            JOptionPane.showMessageDialog(null,"Please complete all the field");
-                        }
-                        else
-                        {
-                            doctDialog.dispose();
-                            Doctor d=new Doctor(namefield.getText(), idField.getText(),typefield.getText());
-                            doctorList.add(d);
-                        }
-                        
-                    }
-                });
-                
-                
-                
-            }
-        });
-        
-         
-        addSecretaryItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) 
-            {
-                final JDialog dialog=new JDialog();
-                dialog.setLayout(null);
-                JLabel nameLabel=new JLabel("Enter Name:");
-                final JTextField namefield=new JTextField();
-                JLabel idLabel=new JLabel("Enter ID");
-                final JTextField idField=new JTextField();
-                JButton submitButton=new JButton("Add");
-                nameLabel.setBounds(10, 5,200,25);
-                namefield.setBounds(100,5,200,25);
-                idLabel.setBounds(10,30,200,25);
-                idField.setBounds(100, 30,200,25);
-                submitButton.setBounds(100,110,200,60);
-                dialog.add(submitButton);
-                dialog.add(nameLabel);
-                dialog.add(namefield);
-                dialog.add(idLabel);
-                dialog.add(idField);
-                
-                dialog.add(submitButton);
-                dialog.setSize(350,350);
-
-                dialog.setResizable(false);
-                dialog.setLocationRelativeTo(null);
-                dialog.setVisible(true);
-                submitButton.addActionListener(new ActionListener() 
-                {
-                    @Override
-                    public void actionPerformed(ActionEvent e) 
-                    {
-                        if(namefield.getText().equals("") || idField.getText().equals(""))
-                        {
-                            JOptionPane.showMessageDialog(null,"Please complete all the field");
-                        }
-                        else
-                        {
-                            dialog.dispose();
-                            Secretary d=new Secretary(namefield.getText(), idField.getText());
-                            secretaryList.add(d);
-                        }
-                    }
-                });
-            }
-        });
-        
-        addPharmacistItem.addActionListener(new ActionListener() 
-        {
-            @Override
-            public void actionPerformed(ActionEvent e) 
-            {
-                final JDialog dialog=new JDialog();
-                dialog.setLayout(null);
-                JLabel nameLabel=new JLabel("Enter Name:");
-                final JTextField namefield=new JTextField();
-                JLabel idLabel=new JLabel("Enter ID");
-                final JTextField idField=new JTextField();
-                JButton submitButton=new JButton("Add");
-                nameLabel.setBounds(10, 5,200,25);
-                namefield.setBounds(100,5,200,25);
-                idLabel.setBounds(10,30,200,25);
-                idField.setBounds(100, 30,200,25);
-                submitButton.setBounds(100,110,200,60);
-                dialog.add(submitButton);
-                dialog.add(nameLabel);
-                dialog.add(namefield);
-                dialog.add(idLabel);
-                dialog.add(idField);
-                
-                dialog.add(submitButton);
-                dialog.setSize(350,350);
-
-                dialog.setResizable(false);
-                dialog.setLocationRelativeTo(null);
-                dialog.setVisible(true);
-                
-                
-                submitButton.addActionListener(new ActionListener() 
-                {
-                    @Override
-                    public void actionPerformed(ActionEvent e) 
-                    {
-                        if(namefield.getText().equals("") || idField.getText().equals(""))
-                        {
-                            JOptionPane.showMessageDialog(null,"Please Complete All the field");
-                        }
-                        else
-                        {
-                            dialog.dispose();
-                            Pharmacist d=new Pharmacist(namefield.getText(), idField.getText());
-                            pharmaList.add(d);
-                        }
-                        
-                    }
-                });
-                
-                
-                
-            }
-        });
-        
-        //// End of Adding menu
-        
-        setTitle("Appointment System");
-        setSize(600,600);
-        setLayout(new FlowLayout());
-
-        /// addding Login Button
-        JButton loginButton=new JButton("Login");
-        
-        add(loginButton);
        
-        /* 
-        reportButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) 
-            {
-                System.out.println("*******************  Patient Report ***********************");
-                
-                for(int i=0;i<patientList.size();i++)
-                {
-                    Patient temp=patientList.get(i);
-                    System.out.println("PatientId:"+temp.patientId+"\tPatientName:"+temp.patientName+"\tAddress:"+temp.address+"\tMedications:"+temp.medications+"\tMobile:"+temp.mobile);
-                    System.out.println("\n***********  Appointment List for the Patient:"+temp.patientName+" ***********");
-                    for(int s=0;s<temp.appointmentList.size();s++)
-                    {
-                        Appointment atemp=temp.appointmentList.get(s);
-                        System.out.println(atemp.date+"\t"+atemp.from+"\t"+atemp.to+"\t"+atemp.desc+"\t"+atemp.doctor.doctorName);
-                    }
-                
-                    System.out.println("\n");
-                }
-                
-                System.out.println("\n**************** Doctor Report ****************");
-                for(int d=0;d<doctorList.size();d++)
-                {
-                    Doctor tDoct=doctorList.get(d);
-                    System.out.println("ID:"+tDoct.doctorId+"\tName:"+tDoct.doctorName+"\tType:"+tDoct.type);
-                
-                }
-                
-                System.out.println("\n************** Total Appointment Report *************");
-                
-                
-                for(int p=0;p<patientList.size();p++)
-                {
-                    ArrayList<Appointment> tempList=patientList.get(p).appointmentList;
-                    
-                    for(int t=0;t<tempList.size();t++)
-                    {
-                        Appointment tAppnt=tempList.get(t);
-                        System.out.println("Date:"+tAppnt.date+"\tFrom:"+tAppnt.from+"\tTo:"+tAppnt.to+"\tDescription:"+tAppnt.desc+"\tStatus:"+tAppnt.type);
-                    
-                    }
-                
-                }
-            }
-        });
-        */
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) 
-            {
+       
+       
+        
                 ///Login Dialog
                 final JDialog loginDialog=new JDialog();
                 loginDialog.setLayout(null);
@@ -600,7 +100,7 @@ public class AppointmentSystem extends JFrame
                 loginDialog.add(namefield);
                 loginDialog.add(submitButton);
                 
-                String type[]={"Patient","Doctor","Secretary","Pharmacist"};        
+                String type[]={"Patient","Doctor","Secretary","Pharmacist","Admin"};        
                 final JComboBox cb=new JComboBox(type);    
                 cb.setBounds(230, 70,100,60); 
                 loginDialog.add(cb);
@@ -609,6 +109,12 @@ public class AppointmentSystem extends JFrame
                 loginDialog.setResizable(false);
                 loginDialog.setLocationRelativeTo(null);
                 loginDialog.setVisible(true);
+                
+                loginDialog.addWindowListener(new WindowAdapter() { 
+                @Override public void windowClosed(WindowEvent e) { 
+                  System.exit(0);
+                }
+                 });
                 
                 submitButton.addActionListener(new ActionListener() {
 
@@ -625,6 +131,461 @@ public class AppointmentSystem extends JFrame
                         Patient p = null;
                         final Patient fpatient;
                         int index=cb.getSelectedIndex();
+                        
+                        ///admin
+                        if(index==4)
+                        {
+                            if(namefield.getText().equalsIgnoreCase("admin"))
+                            {
+                            JFrame adminFrame=new JFrame("Admin Frame");
+                            adminFrame.setTitle("Appointment System");
+                            adminFrame.setSize(600,600);
+                            adminFrame.setLayout(new FlowLayout());
+                            adminFrame.setVisible(true);
+                            
+                            JMenuBar jm=new JMenuBar();
+                            JMenu addmenu=new JMenu("Add Menu");
+                            JMenuItem addPatientItem=new JMenuItem("Add Patient to System");
+                            JMenuItem addDoctorItem=new JMenuItem("Add Doctor Item");
+                            JMenuItem addPharmacistItem=new JMenuItem("Add Pharmacist");
+                            JMenuItem addSecretaryItem=new JMenuItem("Add Secretary");
+
+                            JMenu reportMenu=new JMenu("Report");
+                            JMenuItem preportItem=new JMenuItem("Patient Report");
+                            JMenuItem dreportItem=new JMenuItem("Doctor Report");
+                            JMenuItem areportItem=new JMenuItem("Appointment Report");
+                             //// adding Menu
+                            addmenu.add(addPatientItem);
+                            addmenu.add(addDoctorItem);
+                            addmenu.add(addPharmacistItem);
+                            addmenu.add(addSecretaryItem);
+
+                            reportMenu.add(preportItem);
+                            reportMenu.add(dreportItem);
+                            reportMenu.add(areportItem);
+
+                            adminFrame.setJMenuBar(jm);
+                            jm.add(addmenu);
+                            jm.add(reportMenu);
+                          
+
+
+                            dreportItem.addActionListener(new ActionListener() 
+                            {
+
+                                @Override
+                                public void actionPerformed(ActionEvent e) 
+                                {
+
+                                    final JFrame frame = new JFrame("Doctor Report Window");   
+                                    JPanel jp=new JPanel(new BorderLayout());
+                                    final JList list;
+                                    final DefaultListModel model;
+
+                                    model = new DefaultListModel();
+                                    list = new JList(model);
+                                    JScrollPane pane = new JScrollPane(list);       
+                                    jp.add(pane);
+                                    frame.setContentPane(jp);
+                                    frame.setSize(800,600);
+                                    frame.setVisible(true);
+
+                                    for(int d=0;d<doctorList.size();d++)
+                                    {
+                                        Doctor tDoct=doctorList.get(d);
+                                        model.addElement("ID:"+tDoct.doctorId+"\tName:"+tDoct.doctorName+"\tType:"+tDoct.type);
+
+                                    }
+
+
+
+                                }
+                            });
+                            preportItem.addActionListener(new ActionListener() {
+
+                                @Override
+                                public void actionPerformed(ActionEvent e) 
+                                {
+                                    String startdate=JOptionPane.showInputDialog(null,"Please Enter start Date(dd/mm/yyyy)");
+                                    String endDate=JOptionPane.showInputDialog(null,"Please Enter End Date(dd/mm/yyyy)");
+                                    Date date1 = null,date2=null;
+
+                                    try 
+                                    {
+                                        date1=new SimpleDateFormat("dd/MM/yyyy").parse(startdate);
+                                        date2=new SimpleDateFormat("dd/MM/yyyy").parse(endDate);
+                                    } 
+                                    catch (ParseException ex) 
+                                    {
+                                        Logger.getLogger(AppointmentSystem.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+
+                                    final JFrame frame = new JFrame("Patient Report Window");   
+                                    JPanel jp=new JPanel(new BorderLayout());
+                                    final JList list;
+                                    final DefaultListModel model;
+
+                                    model = new DefaultListModel();
+                                    list = new JList(model);
+                                    JScrollPane pane = new JScrollPane(list);       
+                                    jp.add(pane);
+                                    frame.setContentPane(jp);
+                                    frame.setSize(800,600);
+                                    frame.setVisible(true);
+
+                                    for(int i=0;i<patientList.size();i++)
+                                    {
+                                        Patient temp=patientList.get(i);
+                                        model.addElement("PatientId:"+temp.patientId+"  PatientName: "+temp.patientName+"  Address:"+temp.address+"  Medications:"+temp.medications+"  Mobile:"+temp.mobile);
+                                        model.addElement("\n***********  Appointment List for the Patient:"+temp.patientName+" ***********");
+
+                                        for(int s=0;s<temp.appointmentList.size();s++)
+                                        {
+                                            Date date=null;
+                                            Appointment atemp=temp.appointmentList.get(s);
+                                            try
+                                            {
+                                                date=new SimpleDateFormat("dd/MM/yyyy").parse(atemp.date);
+                                            }
+                                            catch(Exception ee)
+                                            {
+
+                                            }
+
+                                            //System.out.println(date+"  "+date1+"  "+date2+" "+date1.before(date)+"  "+date2.after(date));
+
+
+                                            if(date1.before(date) && date2.after(date))
+                                            {
+
+                                                model.addElement("Date:"+atemp.date+"  From:"+atemp.from+" To:"+atemp.to+" Description:"+atemp.desc+"  DoctorName:"+atemp.doctor.doctorName);
+                                            }
+
+                                        }
+
+                                        model.addElement("\n");
+                                    }
+                                }
+                            });
+
+
+
+                            areportItem.addActionListener(new ActionListener() {
+
+                                @Override
+                                public void actionPerformed(ActionEvent e) 
+                                {
+                                    String startdate=JOptionPane.showInputDialog(null,"Please Enter start Date(dd/mm/yyyy)");
+                                    String endDate=JOptionPane.showInputDialog(null,"Please Enter End Date(dd/mm/yyyy)");
+                                    Date date1 = null,date2=null;
+
+                                    try 
+                                    {
+                                        date1=new SimpleDateFormat("dd/MM/yyyy").parse(startdate);
+                                        date2=new SimpleDateFormat("dd/MM/yyyy").parse(endDate);
+                                    } 
+                                    catch (ParseException ex) 
+                                    {
+                                        Logger.getLogger(AppointmentSystem.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+
+                                    final JFrame frame = new JFrame("Patient Report Window");   
+                                    JPanel jp=new JPanel(new BorderLayout());
+                                    final JList list;
+                                    final DefaultListModel model;
+
+                                    model = new DefaultListModel();
+                                    list = new JList(model);
+                                    JScrollPane pane = new JScrollPane(list);       
+                                    jp.add(pane);
+                                    frame.setContentPane(jp);
+                                    frame.setSize(800,600);
+                                    frame.setVisible(true);
+
+                                    for(int p=0;p<patientList.size();p++)
+                                    {
+                                        ArrayList<Appointment> tempList=patientList.get(p).appointmentList;
+
+                                        for(int t=0;t<tempList.size();t++)
+                                        {
+                                            Date date=null;
+                                            Appointment tAppnt=tempList.get(t);
+                                            try
+                                            {
+                                                date=new SimpleDateFormat("dd/MM/yyyy").parse(tAppnt.date);
+                                            }
+                                            catch(Exception ee)
+                                            {
+
+                                            }
+                                            if(date1.before(date) && date2.after(date))
+                                            {
+                                                model.addElement("Date:"+tAppnt.date+"  From:"+tAppnt.from+"  To:"+tAppnt.to+"  Description:"+tAppnt.desc+"  Status:"+tAppnt.type);
+                                            }
+                                        }
+
+                                    }
+                                }
+                            });
+
+                            /// end of Login Dialog
+
+                            addPatientItem.addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) 
+                                {
+                                    final JDialog patientDialog=new JDialog();
+
+                                    patientDialog.setLayout(null);
+
+
+                                    JLabel nameLabel=new JLabel("Enter Name:");
+                                    final JTextField namefield=new JTextField();
+                                    JLabel addrLabel=new JLabel("Enter Address");
+                                    final JTextField addrField=new JTextField();
+                                    JLabel idLabel=new JLabel("Enter ID:");
+                                    final JTextField idfield=new JTextField();
+                                    JLabel mobLabel=new JLabel("Enter Mobile:");
+                                    final JTextField mobfield=new JTextField();
+
+                                    JButton submitButton=new JButton("Add");
+
+                                    nameLabel.setBounds(10, 5,200,25);
+                                    namefield.setBounds(100,5,200,25);
+
+                                    idLabel.setBounds(10,30,200,25);
+                                    idfield.setBounds(100, 30,200,25);
+
+                                    addrLabel.setBounds(10,50,200,25);
+                                    addrField.setBounds(100,50,200,25);
+
+                                    mobLabel.setBounds(10,70,200,25);
+                                    mobfield.setBounds(100,70,200,25);
+
+                                    submitButton.setBounds(100,110,200,60);
+
+
+
+                                    patientDialog.add(submitButton);
+                                    patientDialog.add(nameLabel);
+                                    patientDialog.add(namefield);
+                                    patientDialog.add(idLabel);
+                                    patientDialog.add(idfield);
+                                    patientDialog.add(addrLabel);
+                                    patientDialog.add(addrField);
+                                    patientDialog.add(mobLabel);
+                                    patientDialog.add(mobfield);
+                                    patientDialog.add(submitButton);
+                                    patientDialog.setSize(350,350);
+
+
+
+                                    patientDialog.setResizable(false);
+                                    patientDialog.setLocationRelativeTo(null);
+                                    patientDialog.setVisible(true);
+
+
+                                    submitButton.addActionListener(new ActionListener() 
+                                    {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) 
+                                        {
+                                            if(namefield.getText().equals("") || addrField.getText().equals("") || mobfield.getText().equals("") || idfield.getText().equals(""))
+                                            {
+                                                JOptionPane.showMessageDialog(null,"Please complete all the field");
+                                            }
+                                            else
+                                            {
+                                                patientDialog.dispose();
+                                                Patient p=new Patient(namefield.getText(), addrField.getText(),mobfield.getText(),idfield.getText());
+                                                patientList.add(p);
+                                            }
+
+                                        }
+                                    });
+
+
+
+                                }
+                            });
+
+                            /// end of Login Dialog
+
+                            addDoctorItem.addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) 
+                                {
+                                    final JDialog doctDialog=new JDialog();
+                                    doctDialog.setLayout(null);
+                                    JLabel nameLabel=new JLabel("Enter Name:");
+                                    final JTextField namefield=new JTextField();
+                                    JLabel idLabel=new JLabel("Enter ID");
+                                    final JTextField idField=new JTextField();
+                                    JLabel typeLabel=new JLabel("Enter Type:");
+                                    final JTextField typefield=new JTextField();
+                                    JButton submitButton=new JButton("Add");
+
+                                    nameLabel.setBounds(10, 5,200,25);
+                                    namefield.setBounds(100,5,200,25);
+
+                                    idLabel.setBounds(10,30,200,25);
+                                    idField.setBounds(100, 30,200,25);
+
+                                    typeLabel.setBounds(10,50,200,25);
+                                    typefield.setBounds(100,50,200,25);
+
+
+                                    submitButton.setBounds(100,110,200,60);
+
+
+
+                                    doctDialog.add(submitButton);
+                                    doctDialog.add(nameLabel);
+                                    doctDialog.add(namefield);
+                                    doctDialog.add(idLabel);
+                                    doctDialog.add(idField);
+                                    doctDialog.add(typeLabel);
+                                    doctDialog.add(typefield);
+                                    doctDialog.add(submitButton);
+                                    doctDialog.setSize(350,350);
+
+
+
+                                    doctDialog.setResizable(false);
+                                    doctDialog.setLocationRelativeTo(null);
+                                    doctDialog.setVisible(true);
+
+
+                                    submitButton.addActionListener(new ActionListener() 
+                                    {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) 
+                                        {
+                                            if(namefield.getText().equals("") || idField.getText().equals("") || typefield.getText().equals(""))
+                                            {
+                                                JOptionPane.showMessageDialog(null,"Please complete all the field");
+                                            }
+                                            else
+                                            {
+                                                doctDialog.dispose();
+                                                Doctor d=new Doctor(namefield.getText(), idField.getText(),typefield.getText());
+                                                doctorList.add(d);
+                                            }
+
+                                        }
+                                    });
+
+
+
+                                }
+                            });
+
+
+                            addSecretaryItem.addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) 
+                                {
+                                    final JDialog dialog=new JDialog();
+                                    dialog.setLayout(null);
+                                    JLabel nameLabel=new JLabel("Enter Name:");
+                                    final JTextField namefield=new JTextField();
+                                    JLabel idLabel=new JLabel("Enter ID");
+                                    final JTextField idField=new JTextField();
+                                    JButton submitButton=new JButton("Add");
+                                    nameLabel.setBounds(10, 5,200,25);
+                                    namefield.setBounds(100,5,200,25);
+                                    idLabel.setBounds(10,30,200,25);
+                                    idField.setBounds(100, 30,200,25);
+                                    submitButton.setBounds(100,110,200,60);
+                                    dialog.add(submitButton);
+                                    dialog.add(nameLabel);
+                                    dialog.add(namefield);
+                                    dialog.add(idLabel);
+                                    dialog.add(idField);
+
+                                    dialog.add(submitButton);
+                                    dialog.setSize(350,350);
+
+                                    dialog.setResizable(false);
+                                    dialog.setLocationRelativeTo(null);
+                                    dialog.setVisible(true);
+                                    submitButton.addActionListener(new ActionListener() 
+                                    {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) 
+                                        {
+                                            if(namefield.getText().equals("") || idField.getText().equals(""))
+                                            {
+                                                JOptionPane.showMessageDialog(null,"Please complete all the field");
+                                            }
+                                            else
+                                            {
+                                                dialog.dispose();
+                                                Secretary d=new Secretary(namefield.getText(), idField.getText());
+                                                secretaryList.add(d);
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+
+                            addPharmacistItem.addActionListener(new ActionListener() 
+                            {
+                                @Override
+                                public void actionPerformed(ActionEvent e) 
+                                {
+                                    final JDialog dialog=new JDialog();
+                                    dialog.setLayout(null);
+                                    JLabel nameLabel=new JLabel("Enter Name:");
+                                    final JTextField namefield=new JTextField();
+                                    JLabel idLabel=new JLabel("Enter ID");
+                                    final JTextField idField=new JTextField();
+                                    JButton submitButton=new JButton("Add");
+                                    nameLabel.setBounds(10, 5,200,25);
+                                    namefield.setBounds(100,5,200,25);
+                                    idLabel.setBounds(10,30,200,25);
+                                    idField.setBounds(100, 30,200,25);
+                                    submitButton.setBounds(100,110,200,60);
+                                    dialog.add(submitButton);
+                                    dialog.add(nameLabel);
+                                    dialog.add(namefield);
+                                    dialog.add(idLabel);
+                                    dialog.add(idField);
+
+                                    dialog.add(submitButton);
+                                    dialog.setSize(350,350);
+
+                                    dialog.setResizable(false);
+                                    dialog.setLocationRelativeTo(null);
+                                    dialog.setVisible(true);
+
+
+                                    submitButton.addActionListener(new ActionListener() 
+                                    {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) 
+                                        {
+                                            if(namefield.getText().equals("") || idField.getText().equals(""))
+                                            {
+                                                JOptionPane.showMessageDialog(null,"Please Complete All the field");
+                                            }
+                                            else
+                                            {
+                                                dialog.dispose();
+                                                Pharmacist d=new Pharmacist(namefield.getText(), idField.getText());
+                                                pharmaList.add(d);
+                                            }
+
+                                        }
+                                    });
+
+
+
+                                }
+                            });
+        
+                            }
+                        }
                         ///patient
                         if(index==0)
                         {   
@@ -1240,23 +1201,15 @@ public class AppointmentSystem extends JFrame
                 });
                 
               
-                
-            }
-        });
+     
         
-        
-        addWindowListener(new WindowAdapter() {
-        public void windowClosing(WindowEvent e)
-        {
-            System.exit(0);
-        }
-      });
+       
         
     }
     public static void main(String[] args) 
     {
         AppointmentSystem ap=new AppointmentSystem();
-        ap.setVisible(true);
+        
         
     }
 }
