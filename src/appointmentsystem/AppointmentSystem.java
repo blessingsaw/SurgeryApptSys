@@ -44,16 +44,16 @@ public class AppointmentSystem extends JFrame
     {
         
         //// initialize preregistered member
-        patientList.add(new Patient("p1n","Mumbai","Mob","p1"));
-        patientList.add(new Patient("p2n","Mumbai","Mob2","p2"));
-        patientList.add(new Patient("p3n","Mumbai","Mob3","p3"));
-        patientList.add(new Patient("p4n","Mumbai","Mob4","p4"));
-        patientList.add(new Patient("p5n","Mumbai","Mob5","p5"));
-        patientList.add(new Patient("p6n","Mumbai","Mob2","p6"));
-        patientList.add(new Patient("p7n","Mumbai","Mob2","p7"));
-        patientList.add(new Patient("p8n","Mumbai","Mob2","p8"));
-        patientList.add(new Patient("p9n","Mumbai","Mob2","p9"));
-        patientList.add(new Patient("p10n","Mumbai","Mob2","p10"));
+        patientList.add(new Patient("Patient_Name_1","Singapore","+6587654321","P1"));
+        patientList.add(new Patient("Patient_Name_2","Singapore","+6587654322","P2"));
+        patientList.add(new Patient("Patient_Name_3","Singapore","+6587654323","P3"));
+        patientList.add(new Patient("Patient_Name_4","Singapore","+6587654324","P4"));
+        patientList.add(new Patient("Patient_Name_5","Singapore","+6587654325","P5"));
+        patientList.add(new Patient("Patient_Name_6","Singapore","+6587654326","P6"));
+        patientList.add(new Patient("Patient_Name_7","Singapore","+6587654327","P7"));
+        patientList.add(new Patient("Patient_Name_8","Singapore","+6587654328","P8"));
+        patientList.add(new Patient("Patient_Name_9","Singapore","+6587654329","P9"));
+        patientList.add(new Patient("Patient_Name_10","Singapore","+6587654330","P10"));
         
         secretaryList.add(new Secretary("Secretart1","s1"));
         
@@ -88,6 +88,8 @@ public class AppointmentSystem extends JFrame
         
                 ///Login Dialog
                 final JDialog loginDialog=new JDialog();
+                loginDialog.setTitle("UHSurgery Appointment Management System");
+                
                 loginDialog.setLayout(null);
                 JLabel nameLabel=new JLabel("ID:");
                 final JTextField namefield=new JTextField();
@@ -138,7 +140,7 @@ public class AppointmentSystem extends JFrame
                             if(namefield.getText().equalsIgnoreCase("admin"))
                             {
                             JFrame adminFrame=new JFrame("Admin Frame");
-                            adminFrame.setTitle("Appointment System");
+                            adminFrame.setTitle("UHSurgery Appointment Management System – Admin Module");
                             adminFrame.setSize(600,600);
                             adminFrame.setLayout(new FlowLayout());
                             adminFrame.setVisible(true);
@@ -187,6 +189,7 @@ public class AppointmentSystem extends JFrame
                                     JScrollPane pane = new JScrollPane(list);       
                                     jp.add(pane);
                                     frame.setContentPane(jp);
+                                    frame.setName("UHSurgery Appointment Management System – Doctor Report Module");
                                     frame.setSize(800,600);
                                     frame.setVisible(true);
 
@@ -232,6 +235,8 @@ public class AppointmentSystem extends JFrame
                                     frame.setContentPane(jp);
                                     frame.setSize(800,600);
                                     frame.setVisible(true);
+                                    
+                                    frame.setName("UHSurgery Appointment Management System – Patient Report Module");
 
                                     for(int i=0;i<patientList.size();i++)
                                     {
@@ -289,7 +294,7 @@ public class AppointmentSystem extends JFrame
                                         Logger.getLogger(AppointmentSystem.class.getName()).log(Level.SEVERE, null, ex);
                                     }
 
-                                    final JFrame frame = new JFrame("Patient Report Window");   
+                                    final JFrame frame = new JFrame("UHSurgery Appointment Management System – Appointment Report Module");   
                                     JPanel jp=new JPanel(new BorderLayout());
                                     final JList list;
                                     final DefaultListModel model;
@@ -338,6 +343,7 @@ public class AppointmentSystem extends JFrame
 
                                     patientDialog.setLayout(null);
 
+                                    patientDialog.setName("UHSurgery Appointment Management System – Patient Module");
 
                                     JLabel nameLabel=new JLabel("Enter Name:");
                                     final JTextField namefield=new JTextField();
@@ -417,6 +423,7 @@ public class AppointmentSystem extends JFrame
                                 {
                                     final JDialog doctDialog=new JDialog();
                                     doctDialog.setLayout(null);
+                                    doctDialog.setName("UHSurgery Appointment Management System – Doctor Module");
                                     JLabel nameLabel=new JLabel("Enter Name:");
                                     final JTextField namefield=new JTextField();
                                     JLabel idLabel=new JLabel("Enter ID");
@@ -486,6 +493,7 @@ public class AppointmentSystem extends JFrame
                                 public void actionPerformed(ActionEvent e) 
                                 {
                                     final JDialog dialog=new JDialog();
+                                    dialog.setName("UHSurgery Appointment Management System – Secretary Module");
                                     dialog.setLayout(null);
                                     JLabel nameLabel=new JLabel("Enter Name:");
                                     final JTextField namefield=new JTextField();
@@ -536,6 +544,7 @@ public class AppointmentSystem extends JFrame
                                 {
                                     final JDialog dialog=new JDialog();
                                     dialog.setLayout(null);
+                                    dialog.setName("UHSurgery Appointment Management System – Pharmacist Module");
                                     JLabel nameLabel=new JLabel("Enter Name:");
                                     final JTextField namefield=new JTextField();
                                     JLabel idLabel=new JLabel("Enter ID");
@@ -605,7 +614,8 @@ public class AppointmentSystem extends JFrame
                             if(flag)
                             {
                                 fpatient=p;
-                                JFrame patientFrame=new JFrame("Patient Window");
+                                JFrame patientFrame=new JFrame("UHSurgery Appointment Management System – Patient Module");
+                                JLabel welcome=new JLabel("Welcome Patient "+fpatient.patientName);
                                 JButton requestAppntButton=new JButton("Request Appointment");
                                 JButton viewAppointmentbutton=new JButton("View Appointment");
 
@@ -617,33 +627,33 @@ public class AppointmentSystem extends JFrame
                                     {
                                         final JDialog requestAppntDialog=new JDialog();
                                         requestAppntDialog.setLayout(null);
-                                        JLabel appIDLbl=new JLabel("Description:");
+                                        JLabel appIDLbl=new JLabel("Symptoms");
                                         final JTextField appfield=new JTextField();
                                         
-                                        JLabel date=new JLabel("Date");
+                                        JLabel date=new JLabel("Date(dd/mm/yyyy)");
                                         final JTextField datefield=new JTextField();
                                         
-                                        JLabel appntFrom=new JLabel("From(Time)");
+                                        JLabel appntFrom=new JLabel("Start Time(hh:mm)");
                                         final JTextField frmFld=new JTextField();
                                         
-                                        JLabel appntTo=new JLabel("To(Time)");
+                                        JLabel appntTo=new JLabel("End Time(hh:mm)");
                                         final JTextField toField=new JTextField();
                                         
                                         
                                         JButton submitButton=new JButton("Request Appointment");
                                         appIDLbl.setBounds(10, 5,200,25);
-                                        appfield.setBounds(100,5,200,25);
+                                        appfield.setBounds(120,5,200,25);
 
                                         appntFrom.setBounds(10,30,200,25);
-                                        frmFld.setBounds(100, 30,200,25);
+                                        frmFld.setBounds(120, 30,200,25);
 
                                         appntTo.setBounds(10,50,200,25);
-                                        toField.setBounds(100,50,200,25);
+                                        toField.setBounds(120,50,200,25);
                                         
                                         date.setBounds(10,80,200,25);
-                                        datefield.setBounds(100,80,200,25);
+                                        datefield.setBounds(120,80,200,25);
 
-                                        submitButton.setBounds(100,180,200,60);
+                                        submitButton.setBounds(120,180,200,60);
                                         requestAppntDialog.add(appIDLbl);
                                         requestAppntDialog.add(appfield);
                                         requestAppntDialog.add(appntFrom);
@@ -658,14 +668,14 @@ public class AppointmentSystem extends JFrame
                                         
                                         for(int dd=0;dd<doctorList.size();dd++)
                                         {
-                                            type[dd]=doctorList.get(dd).doctorName;
+                                            type[dd]=doctorList.get(dd).doctorName+","+doctorList.get(dd).type;
                                         }
                                         
                                         
                                         JLabel doctLabel=new JLabel("Doctor");
                                         final JComboBox cb=new JComboBox(type);
                                         doctLabel.setBounds(10, 110,100,60);
-                                        cb.setBounds(100, 110,100,60); 
+                                        cb.setBounds(120, 110,120,60); 
                                         requestAppntDialog.add(doctLabel);
                                         requestAppntDialog.add(cb);
                                         
@@ -725,36 +735,36 @@ public class AppointmentSystem extends JFrame
                                             {
                                                 try
                                                 {
-                                                JLabel date=new JLabel("Date");
+                                                JLabel date=new JLabel("Date(dd/mm/yyyy)");
                                                 final JTextField datefield=new JTextField(fpatient.appointmentList.get(list.getSelectedIndex()-1).date);
                                         
                                                 final JDialog requestAppntDialog=new JDialog();
                                                 requestAppntDialog.setLayout(null);
-                                                JLabel appIDLbl=new JLabel("Description:");
+                                                JLabel appIDLbl=new JLabel("Symptoms:");
                                                 final JTextField appfield=new JTextField(fpatient.appointmentList.get(list.getSelectedIndex()-1).desc);
 
-                                                JLabel appntFrom=new JLabel("From (Time)");
+                                                JLabel appntFrom=new JLabel("Start Time(hh:mm)");
                                                 final JTextField frmFld=new JTextField(fpatient.appointmentList.get(list.getSelectedIndex()-1).from);
 
-                                                JLabel appntTo=new JLabel("To (Time)");
+                                                JLabel appntTo=new JLabel("End Time(hh:mm)");
                                                 final JTextField toField=new JTextField(fpatient.appointmentList.get(list.getSelectedIndex()-1).to);
 
 
                                                 JButton submitButton=new JButton("Request Appointment Change");
                                                 
                                                 appIDLbl.setBounds(10, 5,200,25);
-                                                appfield.setBounds(100,5,200,25);
+                                                appfield.setBounds(120,5,200,25);
 
                                                 appntFrom.setBounds(10,30,200,25);
-                                                frmFld.setBounds(100, 30,200,25);
+                                                frmFld.setBounds(120, 30,200,25);
 
                                                 appntTo.setBounds(10,50,200,25);
-                                                toField.setBounds(100,50,200,25);
+                                                toField.setBounds(120,50,200,25);
 
                                                 date.setBounds(10,80,200,25);
-                                                datefield.setBounds(100,80,200,25);
+                                                datefield.setBounds(120,80,200,25);
 
-                                                submitButton.setBounds(100,180,260,60);
+                                                submitButton.setBounds(120,180,260,60);
                                                 requestAppntDialog.add(appIDLbl);
                                                 requestAppntDialog.add(appfield);
                                                 requestAppntDialog.add(appntFrom);
@@ -769,14 +779,14 @@ public class AppointmentSystem extends JFrame
 
                                                 for(int dd=0;dd<doctorList.size();dd++)
                                                 {
-                                                    type[dd]=doctorList.get(dd).doctorName;
+                                                    type[dd]=doctorList.get(dd).doctorName+" ,"+doctorList.get(dd).type;
                                                 }
 
 
                                                 JLabel doctLabel=new JLabel("Doctor");
                                                 final JComboBox cb=new JComboBox(type);
                                                 doctLabel.setBounds(10, 110,100,60);
-                                                cb.setBounds(100, 110,100,60); 
+                                                cb.setBounds(100, 110,120,60); 
                                                 requestAppntDialog.add(doctLabel);
                                                 requestAppntDialog.add(cb);
                                         
@@ -865,6 +875,7 @@ public class AppointmentSystem extends JFrame
                                            
 
                                        jp.add(pane, BorderLayout.NORTH);
+                                       
                                        jp.add(chngButton, BorderLayout.WEST);
                                        jp.add(cancelButton, BorderLayout.EAST);
                                        frame.setContentPane(jp);
@@ -873,11 +884,16 @@ public class AppointmentSystem extends JFrame
                                     }
                                 });
 
+                                patientFrame.add(welcome);
                                 patientFrame.add(requestAppntButton);
                                 patientFrame.add(viewAppointmentbutton);
                                 
 
-                                patientFrame.setLayout(new FlowLayout());
+                                patientFrame.setLayout(null);
+                                
+                                welcome.setBounds(50,3,300,70);
+                                requestAppntButton.setBounds(50,70,270,60);
+                                viewAppointmentbutton.setBounds(50,150,270,60);
                                 patientFrame.setSize(500,500);
                                 loginDialog.setVisible(false);
                                 patientFrame.setVisible(true);
@@ -909,7 +925,7 @@ public class AppointmentSystem extends JFrame
                             if(flag)
                             {
                                 fd=d;
-                                JFrame doctorFrame=new JFrame("Doctor Window");
+                                JFrame doctorFrame=new JFrame("UHSurgery Appointment Management System – Doctor Module");
                                 JButton viewPatientbutton=new JButton("View Patient List");
 
                                 viewPatientbutton.addActionListener(new ActionListener() 
@@ -1023,7 +1039,7 @@ public class AppointmentSystem extends JFrame
                             if(flag)
                             {
                                 fs=s;
-                                JFrame secretaryFrame=new JFrame("Secretary Window");
+                                JFrame secretaryFrame=new JFrame("UHSurgery Appointment Management System – Secretary Module");
                                 JButton viewPatientbutton=new JButton("View Requested Appointment List");
                                 viewPatientbutton.addActionListener(new ActionListener() {
                                     @Override
@@ -1115,7 +1131,7 @@ public class AppointmentSystem extends JFrame
                             
                             if(flag)
                             {
-                                JFrame pharmacistFrame=new JFrame("Pharmacist Window");
+                                JFrame pharmacistFrame=new JFrame("UHSurgery Appointment Management System – Pharmacist Module");
                                 JButton viewPharmacistbutton=new JButton("View Medication List For Patient");
 
                                 viewPharmacistbutton.addActionListener(new ActionListener() {
