@@ -32,6 +32,7 @@ public class Patient
     ///adding new appointment
     public boolean requestAppointment(Secretary p,String desc,String date,String from,String to,Doctor d)
     {
+      // System.out.println("date:"+date+"  desc:"+desc);
         return p.finalizeRequestAppointment(desc,date,from,to,this,d);
         
     }
@@ -39,6 +40,7 @@ public class Patient
       ///adding new appointment
     public boolean chngrequestAppointment(Secretary p,String date,String desc,String from,String to,Doctor d)
     {
+       
         return p.finalizechngRequestAppointment(desc,date,from,to,this,d);
         
     }
