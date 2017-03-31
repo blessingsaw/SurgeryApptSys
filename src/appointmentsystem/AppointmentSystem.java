@@ -58,12 +58,14 @@ public class AppointmentSystem extends JFrame
         secretaryList.add(new Secretary("Secretary_Name_1","S1"));
         
         
-        pharmaList.add(new Pharmacist("Pharmacist_Name_1", "Ph1"));
+        pharmaList.add(new Pharmacist("Pharmacist_Name_1", "PH1"));
         
 
-        doctorList.add(new Doctor("d1n","d1", "Dentist"));
-        doctorList.add(new Doctor("d2n","d2", "Dermatologist"));
-        doctorList.add(new Doctor("d3n","d3", "Medicine"));
+        doctorList.add(new Doctor("Doctor_Name_1","D1", "Physician"));
+        doctorList.add(new Doctor("Doctor_Name_2","D2", "Orhopedic"));
+        doctorList.add(new Doctor("Doctor_Name_3","D3", "Cardiologist"));
+        doctorList.add(new Doctor("Doctor_Name_4","D4", "Ophthalmologist"));
+        doctorList.add(new Doctor("Doctor_Name_5","D5", "Pediatric"));
         
         
         patientList.get(0).requestAppointment(secretaryList.get(0),"Heart Problm","29/3/2017", "17:00","17:30",doctorList.get(0));
@@ -241,8 +243,8 @@ public class AppointmentSystem extends JFrame
                                     for(int i=0;i<patientList.size();i++)
                                     {
                                         Patient temp=patientList.get(i);
-                                        model.addElement("PatientId:"+temp.patientId+"  PatientName: "+temp.patientName+"  Address:"+temp.address+"  Medications:"+temp.medications+"  Mobile:"+temp.mobile);
-                                        model.addElement("\n***********  Appointment List for the Patient:"+temp.patientName+" ***********");
+                                        //model.addElement("PatientId:"+temp.patientId+"  PatientName: "+temp.patientName+"  Address:"+temp.address+"  Medications:"+temp.medications+"  Mobile:"+temp.mobile);
+                                        //model.addElement("\n***********  Appointment List for the Patient:"+temp.patientName+" ***********");
 
                                         for(int s=0;s<temp.appointmentList.size();s++)
                                         {
@@ -907,7 +909,7 @@ public class AppointmentSystem extends JFrame
                                 requestAppntButton.setBounds(50,70,270,60);
                                 viewAppointmentbutton.setBounds(50,150,270,60);
                                 patientFrame.setSize(500,500);
-                                loginDialog.setVisible(false);
+                                //loginDialog.setVisible(false);
                                 patientFrame.setVisible(true);
                             }
                             else
@@ -938,7 +940,8 @@ public class AppointmentSystem extends JFrame
                             {
                                 fd=d;
                                 JFrame doctorFrame=new JFrame("UHSurgery Appointment Management System – Doctor Module");
-                                JButton viewPatientbutton=new JButton("View Patient List");
+                                JLabel welcome=new JLabel("Welcome:"+fd.doctorName);
+                                JButton viewPatientbutton=new JButton("View List of Appointments");
 
                                 viewPatientbutton.addActionListener(new ActionListener() 
                                 {
@@ -951,18 +954,49 @@ public class AppointmentSystem extends JFrame
                                         final JList list;
                                         final DefaultListModel model;
                                         
+                                        String datestr=JOptionPane.showInputDialog("Please Eeter a Date(dd/mm/yyyy)");
+                                        Date date1=null;
+                                        try {
+                                            date1=new SimpleDateFormat("dd/MM/yyyy").parse(datestr);
+                                        } catch (ParseException ex) {
+                                            
+                                        }
+                                        
+                                        
                                         model = new DefaultListModel();
                                         list = new JList(model);
                                         JScrollPane pane = new JScrollPane(list);
                                         JButton completeButton = new JButton("Complete Appointment");
-                                        JButton makeMedicationsButton = new JButton("Make Notes");
+                                        JButton makeMedicationsButton = new JButton("Make Notes & Medications");
                                         
-                                        model.addElement("Patient ---"+"Mobile ---"+"Medications ---");
+                                        model.addElement("Patient ---"+"Date ----"+"Start Time ----"+"End Time ----"+"Symptoms----"+"Medications ----");
                                         
                                         for (int i = 0; i < fd.bookedSlot.size(); i++)
                                         {
-                                            model.addElement(fd.bookedSlot.get(i).p.patientName+"---"+fd.bookedSlot.get(i).p.mobile+"---"+fd.bookedSlot.get(i).p.medications);
-                                        
+                                            Date startDate=null;
+                                            try 
+                                            {
+                                                startDate=new SimpleDateFormat("dd/MM/yyyy").parse(fd.bookedSlot.get(i).date);
+                                                
+                                            } 
+                                            catch (ParseException ex) 
+                                            {
+
+                                            }
+                                            if(date1.compareTo(startDate)==0)
+                                            {
+                                                ArrayList<Appointment> tempList=fd.bookedSlot.get(i).p.getAppointmentList();
+                                                int temp=0;
+                                                for(temp=0;temp<tempList.size();temp++)
+                                                {
+                                                    if(tempList.get(temp).doctor.doctorId.equals(fd.doctorId))
+                                                    {
+                                                        break;
+                                                    }
+                                                }
+                                                
+                                                model.addElement(fd.bookedSlot.get(i).p.patientName+"---"+fd.bookedSlot.get(i).date+"----"+fd.bookedSlot.get(i).from+"----"+fd.bookedSlot.get(i).to+"---"+fd.bookedSlot.get(i).p.appointmentList.get(0).description()+"---"+tempList.get(temp).medications);
+                                            }
                                         }
                                         
                                         completeButton.addActionListener(new ActionListener() 
@@ -1003,7 +1037,8 @@ public class AppointmentSystem extends JFrame
                                             public void actionPerformed(ActionEvent e) 
                                             {
                                                 String notes=JOptionPane.showInputDialog("Enter Notes For the Patient");
-                                                fd.makeNotes(list.getSelectedIndex(),notes);
+                                                String medications=JOptionPane.showInputDialog("Enter Medications for Patient");
+                                                fd.makeNotes(list.getSelectedIndex(),notes,medications);
                                                 frame.revalidate();
                                             }
                                         });
@@ -1019,10 +1054,14 @@ public class AppointmentSystem extends JFrame
                                 });
 
                                 doctorFrame.add(viewPatientbutton);
-                                doctorFrame.setLayout(new FlowLayout());
+                                doctorFrame.add(welcome);
+                                
+                                welcome.setBounds(20,3,260,60);
+                                viewPatientbutton.setBounds(20,40,260,60);
+                                doctorFrame.setLayout(null);
                                 doctorFrame.setSize(500,500);
                                 doctorFrame.setVisible(true);
-                                loginDialog.setVisible(false);
+                                //loginDialog.setVisible(false);
                                 
                             }
                             else
@@ -1073,7 +1112,10 @@ public class AppointmentSystem extends JFrame
                                         model = new DefaultListModel();
                                         list = new JList(model);
                                         JScrollPane pane = new JScrollPane(list);
-                                        JButton completeButton = new JButton("Finalize Appointment");
+                                        JButton completeButton = new JButton("Finalize");
+                                        JButton cancelButton=new JButton("Cancel");
+                                        JButton chngButton=new JButton("Change");
+                                        
                                         Date date1=null,date2=null;
                                         try 
                                         {
@@ -1088,14 +1130,16 @@ public class AppointmentSystem extends JFrame
                                         
                                         model.addElement("Patient ---"+"Mobile ---"+"Doctor ---"+"Type ---"+"Date"+"----"+"Start(time)---"+"End Time");
                                         
+                                        final ArrayList<Integer> al=new ArrayList<Integer>();
                                         //System.out.println("Size:"+fs.secappntmentList.size());
                                         for (int i = 0; i < fs.secappntmentList.size(); i++)
                                         {
                                             try {
                                                 Date date=new SimpleDateFormat("dd/MM/yyyy").parse(fs.secappntmentList.get(i).date);
                                                 
-                                                if(date1.before(date) && date2.after(date))
+                                                if((date1.before(date) && date2.after(date))||(date1.compareTo(date)==0) || (date2.compareTo(date)==0))
                                                 {
+                                                    al.add(i);
                                                     model.addElement(fs.secappntmentList.get(i).patient.patientName+"---"+fs.secappntmentList.get(i).patient.mobile+"---"+fs.secappntmentList.get(i).doctor.doctorName+" ----"+fs.secappntmentList.get(i).type+" -----"+fs.secappntmentList.get(i).date+" -----"+fs.secappntmentList.get(i).from+"-----"+fs.secappntmentList.get(i).to);
                                             
                                                 }
@@ -1113,6 +1157,8 @@ public class AppointmentSystem extends JFrame
                                             {
                                                try
                                                {
+                                                   
+                                                   fs.secappntmentList.remove(fs.secappntmentList.get(al.get(list.getSelectedIndex()-1)));
                                                    model.remove(list.getSelectedIndex());
                                                    frame.revalidate();
                                                    JOptionPane.showMessageDialog(null,"Finalize Appointment Successfully");
@@ -1121,7 +1167,7 @@ public class AppointmentSystem extends JFrame
                                                }
                                                catch(Exception ee)
                                                {
-                                                   JOptionPane.showMessageDialog(null,"Please Select an Appointment to finalize appointment");
+                                                   JOptionPane.showMessageDialog(null,"Please Select an Appointment to finalize appointment:"+ee);
                                                    frame.dispose();
                                                }    
                                                     
@@ -1129,8 +1175,37 @@ public class AppointmentSystem extends JFrame
                                             }
                                         });
                                         
+                                        cancelButton.addActionListener(new ActionListener() 
+                                        {
+
+                                            @Override
+                                            public void actionPerformed(ActionEvent e) 
+                                            {
+                                                try
+                                                {
+                                                  
+                                                   // fpatient.cancelAppointment(fs.secappntmentList.get(al.get(list.getSelectedIndex()-1))),secretaryList.get(0));
+                                                    fs.secappntmentList.remove(fs.secappntmentList.get(al.get(list.getSelectedIndex()-1)));
+                                                    model.remove(list.getSelectedIndex());
+                                                    frame.revalidate();
+                                                    
+                                                    JOptionPane.showMessageDialog(null,"Cancel Appointment Successfully");
+                                                    
+                                                   
+                                                }
+                                                catch(Exception ee)
+                                                {
+                                                    JOptionPane.showMessageDialog(null,"Please select an appointment to Cancel");
+                                                }
+                                                
+                                                
+                                            }
+                                        });
+                                        
+                                        
                                         jp.add(pane, BorderLayout.NORTH);
                                         jp.add(completeButton, BorderLayout.WEST);
+                                        jp.add(cancelButton,BorderLayout.EAST);
                                         frame.setContentPane(jp);
                                         frame.setSize(700,230);
                                         frame.setVisible(true);
@@ -1150,7 +1225,7 @@ public class AppointmentSystem extends JFrame
                                 
                                 secretaryFrame.setSize(500,500);
                                 secretaryFrame.setVisible(true);
-                                loginDialog.setVisible(false);
+                                //.setVisible(false);
                                 
                             }
                             else
@@ -1178,6 +1253,7 @@ public class AppointmentSystem extends JFrame
                             if(flag)
                             {
                                 JFrame pharmacistFrame=new JFrame("UHSurgery Appointment Management System – Pharmacist Module");
+                                JLabel welcome=new JLabel("Welcome: "+ph.pharmacistName);
                                 JButton viewPharmacistbutton=new JButton("View Medication List For Patient");
 
                                 viewPharmacistbutton.addActionListener(new ActionListener() {
@@ -1195,17 +1271,34 @@ public class AppointmentSystem extends JFrame
                                         JButton completeButton = new JButton("Deliver Medications");
                                         
                                         
-                                        model.addElement("Patient ---"+"Mobile ---"+"Medications ---");
+                                        model.addElement("Patient Name---"+"Medications List ---"+"Doctor Name ---"+"Appointment Date ----"+"Patient Mobile");
                                         
                                         final ArrayList<Integer> al=new ArrayList<Integer>();
-                                        
+                                         final ArrayList<Integer> al2=new ArrayList<Integer>();
+                                         
                                         for (int i = 0; i < patientList.size(); i++)
                                         {
-                                            if(!patientList.get(i).medications.equals("Empty"))
+                                            ArrayList<Appointment> tempList=patientList.get(i).appointmentList;
+                                            int temp=0;
+                                            for(temp=0;temp<tempList.size();temp++)
                                             {
-                                                al.add(i);
-                                                model.addElement(patientList.get(i).patientName+"---"+patientList.get(i).mobile+"---"+patientList.get(i).medications);
+                                                if(tempList.get(temp).patient.patientId.equals(patientList.get(i).patientId))
+                                                {
+                                                    if(!tempList.get(temp).medications.equalsIgnoreCase("EMPTY"))
+                                                    {
+                                                       
+                                                        al.add(temp);
+                                                        al2.add(i);
+                                                        
+                                                        model.addElement(tempList.get(temp).patient.patientName+"---"+tempList.get(temp).medications+"---"+tempList.get(temp).doctor.doctorName+"----"+tempList.get(temp).date+"----"+tempList.get(temp).patient.mobile);
+                                                    }//break;
+                                                }
+                                            
                                             }
+                                            
+                                           
+                                           
+                                           
                                         
                                         }
                                         
@@ -1220,8 +1313,10 @@ public class AppointmentSystem extends JFrame
                                                    int index=list.getSelectedIndex();
                                                    model.remove(index);
                         
-                                                   //System.out.println("s:"+index);
-                                                   patientList.remove(al.get(index-1));
+                                                   //System.out.println(patientList.get(al2.get(index-1)).patientName);
+                                                   
+                                                   patientList.get(al2.get(index-1)).appointmentList.remove(patientList.get(al2.get(index-1)).appointmentList.get(al.get(index-1)));
+                                                   //System.out.println(patientList.size());
                                                    
                                                    frame.revalidate();
                                                    JOptionPane.showMessageDialog(null,"Medication Giving Successfully");
@@ -1248,10 +1343,14 @@ public class AppointmentSystem extends JFrame
                                 });
 
                                 pharmacistFrame.add(viewPharmacistbutton);
-                                pharmacistFrame.setLayout(new FlowLayout());
+                                pharmacistFrame.add(welcome);
+                                
+                                welcome.setBounds(20,0,300,60);
+                                viewPharmacistbutton.setBounds(20,60,300,60);
+                                pharmacistFrame.setLayout(null);
                                 pharmacistFrame.setSize(500,500);
                                 pharmacistFrame.setVisible(true);
-                                loginDialog.setVisible(false);
+                                //loginDialog.setVisible(false);
                             }
                             else
                             {

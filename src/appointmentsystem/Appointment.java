@@ -13,6 +13,9 @@ public class Appointment
     Doctor doctor;
     
     String type;
+    
+    String medications="Empty";
+    String notes="Empty";
     public Appointment(String d,String datepar,String f,String t,Patient pa,Doctor da)
     {
         date=datepar;

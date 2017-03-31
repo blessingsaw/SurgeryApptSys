@@ -78,8 +78,19 @@ public class Doctor
         return true;
     }
 
-    void makeNotes(int d,String notes) {
-        bookedSlot.get(d).p.medications=notes;
+    void makeNotes(int d,String no,String m) 
+    {
+        Patient p=bookedSlot.get(d).p;
+        
+        for(int i=0;i<p.appointmentList.size();i++)
+        {
+            if(bookedSlot.get(d).date.equals(p.appointmentList.get(i).date) && bookedSlot.get(d).from.equals(p.appointmentList.get(i).from))    
+            {
+                p.appointmentList.get(i).medications=m;
+                p.appointmentList.get(i).notes=no;
+            }
+        }
+        
     }
     
 }

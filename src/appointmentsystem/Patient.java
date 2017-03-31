@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package appointmentsystem;
 
 import java.util.ArrayList;
@@ -15,7 +12,7 @@ public class Patient
     ArrayList<Appointment> appointmentList;
     ArrayList<Doctor> doctorList;
     
-    String medications="Empty";
+    
     
     
     //// patient class constructor
