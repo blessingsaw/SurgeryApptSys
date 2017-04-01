@@ -25,7 +25,7 @@ public class Secretary
   
     public boolean cancelfinalizeAppointment(Patient p,int a)
     {
-        p.appointmentList.get(a).type="cancel";
+        p.appointmentList.get(a).type="Cancelled";
         secappntmentList.add(p.appointmentList.get(a));
         
         

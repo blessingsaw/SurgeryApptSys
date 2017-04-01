@@ -7,14 +7,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import static java.awt.image.ImageObserver.WIDTH;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.crypto.SecretKey;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -156,8 +154,8 @@ public class AppointmentSystem extends JFrame
 
                             JMenu reportMenu=new JMenu("Report");
                             JMenuItem preportItem=new JMenuItem("Patient Report");
-                            JMenuItem dreportItem=new JMenuItem("Doctor Report");
-                            JMenuItem areportItem=new JMenuItem("Appointment Report");
+                            JMenuItem dreportItem=new JMenuItem("Appointments taken by Doctor");
+                            JMenuItem areportItem=new JMenuItem("Appointment List");
                              //// adding Menu
                             addmenu.add(addPatientItem);
                             addmenu.add(addDoctorItem);
@@ -181,7 +179,11 @@ public class AppointmentSystem extends JFrame
                                 public void actionPerformed(ActionEvent e) 
                                 {
 
-                                    final JFrame frame = new JFrame("Doctor Report Window");   
+                                    String startdate=JOptionPane.showInputDialog(null,"Please Enter start Date(dd/mm/yyyy)");
+                                    String endDate=JOptionPane.showInputDialog(null,"Please Enter End Date(dd/mm/yyyy)");
+                                    Date date1 = null,date2=null;
+                                    
+                                    final JFrame frame = new JFrame("Appointments taken by Doctor");   
                                     JPanel jp=new JPanel(new BorderLayout());
                                     final JList list;
                                     final DefaultListModel model;
@@ -194,12 +196,49 @@ public class AppointmentSystem extends JFrame
                                     frame.setName("UHSurgery Appointment Management System – Doctor Report Module");
                                     frame.setSize(800,600);
                                     frame.setVisible(true);
+                                    
+                                    
 
-                                    for(int d=0;d<doctorList.size();d++)
+                                    try 
                                     {
-                                        Doctor tDoct=doctorList.get(d);
-                                        model.addElement("ID:"+tDoct.doctorId+"\tName:"+tDoct.doctorName+"\tType:"+tDoct.type);
+                                        date1=new SimpleDateFormat("dd/MM/yyyy").parse(startdate);
+                                        date2=new SimpleDateFormat("dd/MM/yyyy").parse(endDate);
+                                    } 
+                                    catch (ParseException ex) 
+                                    {
+                                        Logger.getLogger(AppointmentSystem.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
 
+                                    model.addElement("Report Date:"+date1+" to"+date2);
+                                    model.addElement("");
+                                    
+                                    for(int d=0;d<patientList.size();d++)
+                                    {
+                                        ArrayList<Appointment> tempList=patientList.get(d).appointmentList;
+                                        
+                                        for(int t=0;t<tempList.size();t++)
+                                        {
+                                            
+                                            Date date=null;
+                                            try
+                                            {
+                                                date=new SimpleDateFormat("dd/MM/yyyy").parse(tempList.get(t).date);
+                                            }
+                                            catch(Exception ee)
+                                            {
+
+                                            }
+
+                                            //System.out.println(date+"  "+date1+"  "+date2+" "+date1.before(date)+"  "+date2.after(date));
+
+
+                                            if((date1.before(date) && date2.after(date)) || (date1.compareTo(date)==0) ||(date2.compareTo(date)==0))
+                                            {
+                                                Doctor tDoct=tempList.get(t).doctor;
+                                                model.addElement("DoctorName:"+tDoct.doctorName+"    PatientName:"+tempList.get(t).patient.patientName+"   Date:"+tempList.get(t).date+" Start Time:"+tempList.get(t).from+"  End Time:"+tempList.get(t).to);
+                                            }
+                                        }
+                
                                     }
 
 
@@ -309,6 +348,9 @@ public class AppointmentSystem extends JFrame
                                     frame.setSize(800,600);
                                     frame.setVisible(true);
 
+                                    model.addElement("Report Date:"+date1+" to"+date2);
+                                    model.addElement("");
+                                    
                                     for(int p=0;p<patientList.size();p++)
                                     {
                                         ArrayList<Appointment> tempList=patientList.get(p).appointmentList;
@@ -325,9 +367,9 @@ public class AppointmentSystem extends JFrame
                                             {
 
                                             }
-                                            if(date1.before(date) && date2.after(date))
+                                            if((date1.before(date) && date2.after(date)) || (date1.compareTo(date)==0) ||(date2.compareTo(date)==0))
                                             {
-                                                model.addElement("Date:"+tAppnt.date+"  From:"+tAppnt.from+"  To:"+tAppnt.to+"  Description:"+tAppnt.desc+"  Status:"+tAppnt.type);
+                                                model.addElement("Doctor Name:"+tAppnt.doctor.doctorName+"  Appointment Status:"+tAppnt.type+" Date:"+tAppnt.date+"  Start Time:"+tAppnt.from+"  End Time:"+tAppnt.to+"  Description:"+tAppnt.desc);
                                             }
                                         }
 
@@ -677,7 +719,7 @@ public class AppointmentSystem extends JFrame
                                         JLabel doctLabel=new JLabel("Doctor");
                                         final JComboBox cb=new JComboBox(type);
                                         doctLabel.setBounds(10, 110,100,60);
-                                        cb.setBounds(120, 110,120,60); 
+                                        cb.setBounds(120, 110,180,60); 
                                         requestAppntDialog.add(doctLabel);
                                         requestAppntDialog.add(cb);
                                         
@@ -954,11 +996,14 @@ public class AppointmentSystem extends JFrame
                                         final JList list;
                                         final DefaultListModel model;
                                         
-                                        String datestr=JOptionPane.showInputDialog("Please Eeter a Date(dd/mm/yyyy)");
+                                        final String datestr=JOptionPane.showInputDialog("Please Eeter a Date(dd/mm/yyyy)");
                                         Date date1=null;
-                                        try {
+                                        try 
+                                        {
                                             date1=new SimpleDateFormat("dd/MM/yyyy").parse(datestr);
-                                        } catch (ParseException ex) {
+                                        } 
+                                        catch (ParseException ex) 
+                                        {
                                             
                                         }
                                         
@@ -983,6 +1028,8 @@ public class AppointmentSystem extends JFrame
                                             {
 
                                             }
+                                            
+                                            //System.out.println("date1:"+date1+"  startDate:"+startDate);
                                             if(date1.compareTo(startDate)==0)
                                             {
                                                 ArrayList<Appointment> tempList=fd.bookedSlot.get(i).p.getAppointmentList();
@@ -1038,7 +1085,50 @@ public class AppointmentSystem extends JFrame
                                             {
                                                 String notes=JOptionPane.showInputDialog("Enter Notes For the Patient");
                                                 String medications=JOptionPane.showInputDialog("Enter Medications for Patient");
-                                                fd.makeNotes(list.getSelectedIndex(),notes,medications);
+                                                fd.makeNotes(list.getSelectedIndex()-1,notes,medications);
+                                                model.removeAllElements();
+                                                
+                                                
+                                                model.addElement("Patient ---"+"Date ----"+"Start Time ----"+"End Time ----"+"Symptoms----"+"Medications ----");
+                                        
+                                                Date dd = null;
+                                                try {
+                                                    dd = new SimpleDateFormat("dd/MM/yyyy").parse(datestr);
+                                                } catch (ParseException ex) {
+                                                    Logger.getLogger(AppointmentSystem.class.getName()).log(Level.SEVERE, null, ex);
+                                                }
+                                                
+                                                for (int i = 0; i < fd.bookedSlot.size(); i++)
+                                                {
+                                                    Date startDate=null;
+                                                    try 
+                                                    {
+                                                        startDate=new SimpleDateFormat("dd/MM/yyyy").parse(fd.bookedSlot.get(i).date);
+
+                                                    } 
+                                                    catch (ParseException ex) 
+                                                    {
+
+                                                    }
+
+                                                    //System.out.println("date1:"+date1+"  startDate:"+startDate);
+                                                    if(dd.compareTo(startDate)==0)
+                                                    {
+                                                        ArrayList<Appointment> tempList=fd.bookedSlot.get(i).p.getAppointmentList();
+                                                        int temp=0;
+                                                        for(temp=0;temp<tempList.size();temp++)
+                                                        {
+                                                            if(tempList.get(temp).doctor.doctorId.equals(fd.doctorId))
+                                                            {
+                                                                break;
+                                                            }
+                                                        }
+
+                                                        model.addElement(fd.bookedSlot.get(i).p.patientName+"---"+fd.bookedSlot.get(i).date+"----"+fd.bookedSlot.get(i).from+"----"+fd.bookedSlot.get(i).to+"---"+fd.bookedSlot.get(i).p.appointmentList.get(0).description()+"---"+tempList.get(temp).medications);
+                                                    }
+                                                }
+
+                                                
                                                 frame.revalidate();
                                             }
                                         });
