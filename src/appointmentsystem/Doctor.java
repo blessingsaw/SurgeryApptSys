@@ -88,9 +88,23 @@ public class Doctor
             {
                 p.appointmentList.get(i).medications=m;
                 p.appointmentList.get(i).notes=no;
+                p.appointmentList.get(i).type="Attended";
             }
         }
         
+    }
+
+    void complete(int d) 
+    {
+        Patient p=bookedSlot.get(d).p;
+        
+        for(int i=0;i<p.appointmentList.size();i++)
+        {
+            if(bookedSlot.get(d).date.equals(p.appointmentList.get(i).date) && bookedSlot.get(d).from.equals(p.appointmentList.get(i).from))    
+            {
+               p.appointmentList.get(i).type="Attended";
+            }
+        }
     }
     
 }
