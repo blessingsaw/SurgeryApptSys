@@ -153,10 +153,10 @@ public class AppointmentSystem extends JFrame
                             JMenuItem addSecretaryItem=new JMenuItem("Add Secretary");
 
                             JMenu reportMenu=new JMenu("Report");
-                            JMenuItem preportItem=new JMenuItem("Patient Appointment List");
-                            JMenuItem dreportItem=new JMenuItem("Appointments taken by Doctor");
-                            JMenuItem areportItem=new JMenuItem("Appointment List");
-                            JMenuItem mreportItem=new JMenuItem("Medication PrescriptionList");
+                            JMenuItem preportItem=new JMenuItem("Individual Patient Appointment Report");
+                            JMenuItem dreportItem=new JMenuItem("CHANGE TO Appointments Taken by All Doctors");
+                            JMenuItem areportItem=new JMenuItem("List of All Appointments");
+                            JMenuItem mreportItem=new JMenuItem("CHANGE TO List of All Medications Prescribed");
                              //// adding Menu
                             addmenu.add(addPatientItem);
                             addmenu.add(addDoctorItem);
@@ -192,7 +192,7 @@ public class AppointmentSystem extends JFrame
                                     JScrollPane pane = new JScrollPane(list);       
                                     jp.add(pane);
                                     frame.setContentPane(jp);
-                                    frame.setName("UHSurgery Appointment Management System – Medicine Prescription List Report Module");
+                                    frame.setName("CHANGE TO List of All Medications Prescribed");
                                     frame.setSize(800,600);
                                     frame.setVisible(true);
                                     
@@ -208,8 +208,8 @@ public class AppointmentSystem extends JFrame
                                         Logger.getLogger(AppointmentSystem.class.getName()).log(Level.SEVERE, null, ex);
                                     }
 
-                                    model.addElement("Report Date:"+date1+" to"+date2);
-                                    model.addElement("");
+                                    model.addElement("Report Date:"+date1+" to "+date2);
+                                    model.addElement("Medicine Name ----"+"Date");
                                     
                                     for(int d=0;d<patientList.size();d++)
                                     {
@@ -235,7 +235,7 @@ public class AppointmentSystem extends JFrame
                                                 if((date1.before(date) && date2.after(date)) || (date1.compareTo(date)==0) ||(date2.compareTo(date)==0))
                                                 {
                                                     
-                                                    model.addElement("Medicine Name:"+tempList.get(t).medications+"   Date:"+tempList.get(t).date);
+                                                    model.addElement(tempList.get(t).medications+" ----"+tempList.get(t).date);
                                                 }
                                             }
                                         }
@@ -259,7 +259,7 @@ public class AppointmentSystem extends JFrame
                                     String endDate=JOptionPane.showInputDialog(null,"Please Enter End Date(dd/mm/yyyy)");
                                     Date date1 = null,date2=null;
                                     
-                                    final JFrame frame = new JFrame("Appointments taken by Doctor");   
+                                    final JFrame frame = new JFrame("CHANGE TO Appointments Taken by All Doctors");   
                                     JPanel jp=new JPanel(new BorderLayout());
                                     final JList list;
                                     final DefaultListModel model;
@@ -285,8 +285,8 @@ public class AppointmentSystem extends JFrame
                                         Logger.getLogger(AppointmentSystem.class.getName()).log(Level.SEVERE, null, ex);
                                     }
 
-                                    model.addElement("Report Date:"+date1+" to"+date2);
-                                    model.addElement("");
+                                    model.addElement("Report Date:"+date1+" to "+date2);
+                                    model.addElement("Doctor Name -----"+"Patient Name -----"+"Date -----"+"Start Time -----"+"End Time");
                                     
                                     for(int d=0;d<patientList.size();d++)
                                     {
@@ -311,7 +311,7 @@ public class AppointmentSystem extends JFrame
                                             if((date1.before(date) && date2.after(date)) || (date1.compareTo(date)==0) ||(date2.compareTo(date)==0))
                                             {
                                                 Doctor tDoct=tempList.get(t).doctor;
-                                                model.addElement("DoctorName:"+tDoct.doctorName+"    PatientName:"+tempList.get(t).patient.patientName+"   Date:"+tempList.get(t).date+" Start Time:"+tempList.get(t).from+"  End Time:"+tempList.get(t).to);
+                                                model.addElement(tDoct.doctorName+" ----"+tempList.get(t).patient.patientName+" ----"+tempList.get(t).date+" ----"+tempList.get(t).from+" ----"+tempList.get(t).to);
                                             }
                                         }
                 
@@ -372,7 +372,7 @@ public class AppointmentSystem extends JFrame
                                     frame.setSize(800,600);
                                     frame.setVisible(true);
                                     
-                                    frame.setName("UHSurgery Appointment Management System – Patient Report Module");
+                                    frame.setName("Individual Patient Appointment Report");
 
                                     
                                     Patient temp=patientList.get(index);
@@ -381,7 +381,7 @@ public class AppointmentSystem extends JFrame
                                     model.addElement("PatientId:"+temp.patientId+"  PatientName: "+temp.patientName);
                                         //model.addElement("\n***********  Appointment List for the Patient:"+temp.patientName+" ***********");
 
-                                    model.addElement(" ");
+                                    model.addElement("Date ----"+"Doctor Name ----"+"Notes ----"+"Medicine");
                                         for(int s=0;s<temp.appointmentList.size();s++)
                                         {
                                             Date date=null;
@@ -399,7 +399,7 @@ public class AppointmentSystem extends JFrame
                                             if((date1.before(date) && date2.after(date)) || (date1.compareTo(date)==0) ||(date2.compareTo(date)==0))
                                             {
 
-                                                model.addElement("Date:"+atemp.date+" Doctor Name:"+atemp.doctor.doctorName+"  Notes:"+atemp.notes+"  Medicines:"+atemp.medications);
+                                                model.addElement(atemp.date+" ----"+atemp.doctor.doctorName+" ----"+atemp.notes+" ----"+atemp.medications);
                                             }
 
                                         }
@@ -431,7 +431,7 @@ public class AppointmentSystem extends JFrame
                                         Logger.getLogger(AppointmentSystem.class.getName()).log(Level.SEVERE, null, ex);
                                     }
 
-                                    final JFrame frame = new JFrame("UHSurgery Appointment Management System – Appointment Report Module");   
+                                    final JFrame frame = new JFrame("List of All Appointments");   
                                     JPanel jp=new JPanel(new BorderLayout());
                                     final JList list;
                                     final DefaultListModel model;
@@ -444,8 +444,8 @@ public class AppointmentSystem extends JFrame
                                     frame.setSize(800,600);
                                     frame.setVisible(true);
 
-                                    model.addElement("Report Date:"+date1+" to"+date2);
-                                    model.addElement("");
+                                    model.addElement("Report Date:"+date1+" to "+date2);
+                                    model.addElement("Doctor Name ----"+"Appointment Status ----"+"Date ----"+"Start Time ----"+"End Time ----"+"Description");
                                     
                                     for(int p=0;p<patientList.size();p++)
                                     {
@@ -465,7 +465,7 @@ public class AppointmentSystem extends JFrame
                                             }
                                             if((date1.before(date) && date2.after(date)) || (date1.compareTo(date)==0) ||(date2.compareTo(date)==0))
                                             {
-                                                model.addElement("Doctor Name:"+tAppnt.doctor.doctorName+"  Appointment Status:"+tAppnt.type+" Date:"+tAppnt.date+"  Start Time:"+tAppnt.from+"  End Time:"+tAppnt.to+"  Description:"+tAppnt.desc);
+                                                model.addElement(tAppnt.doctor.doctorName+" ----"+tAppnt.type+" ----"+tAppnt.date+" ----"+tAppnt.from+" ----"+tAppnt.to+" ----"+tAppnt.desc);
                                             }
                                         }
 
@@ -755,7 +755,7 @@ public class AppointmentSystem extends JFrame
                             {
                                 fpatient=p;
                                 JFrame patientFrame=new JFrame("UHSurgery Appointment Management System – Patient Module");
-                                JLabel welcome=new JLabel("Welcome Patient "+fpatient.patientName);
+                                JLabel welcome=new JLabel("Welcome "+fpatient.patientName);
                                 JButton requestAppntButton=new JButton("Request Appointment");
                                 JButton viewAppointmentbutton=new JButton("View Appointments");
 
@@ -766,6 +766,8 @@ public class AppointmentSystem extends JFrame
                                     public void actionPerformed(ActionEvent e) 
                                     {
                                         final JDialog requestAppntDialog=new JDialog();
+                                        requestAppntDialog.setTitle("Patient Module – Request Appointment");
+                                        
                                         requestAppntDialog.setLayout(null);
                                         JLabel appIDLbl=new JLabel("Symptoms");
                                         final JTextField appfield=new JTextField();
@@ -880,7 +882,7 @@ public class AppointmentSystem extends JFrame
                                         
                                                 final JDialog requestAppntDialog=new JDialog();
                                                 requestAppntDialog.setLayout(null);
-                                                requestAppntDialog.setName("Modify Your Appointment");
+                                                requestAppntDialog.setName("Patient Module – Change Appointment");
                                                 JLabel appIDLbl=new JLabel("Symptoms:");
                                                 final JTextField appfield=new JTextField(fpatient.appointmentList.get(list.getSelectedIndex()-1).desc);
 
@@ -927,7 +929,7 @@ public class AppointmentSystem extends JFrame
                                                 JLabel doctLabel=new JLabel("Doctor");
                                                 final JComboBox cb=new JComboBox(type);
                                                 doctLabel.setBounds(10, 110,100,60);
-                                                cb.setBounds(100, 110,120,60); 
+                                                cb.setBounds(100, 110,180,60); 
                                                 requestAppntDialog.add(doctLabel);
                                                 requestAppntDialog.add(cb);
                                         
@@ -949,14 +951,14 @@ public class AppointmentSystem extends JFrame
                                                                 JOptionPane.showMessageDialog(null,"Appointment Change Successfully Done");
                                                                 requestAppntDialog.dispose();
                                                                 model.removeAllElements();
-                                                                 model.addElement("Description ---"+"DoctorName ---"+"Date----"+"From(Time) ---"+"To(Time)---");
+                                                                model.addElement("Description ---"+"DoctorName ---"+"Date----"+"From(Time) ---"+"To(Time)---");
                                         
-                                        for (int i = 0; i < fpatient.appointmentList.size(); i++)
-                                        {
-                                            
-                                             model.addElement(" --- "+fpatient.appointmentList.get(i).desc+"---"+fpatient.appointmentList.get(i).doctor.doctorName+"---"+fpatient.appointmentList.get(i).date+"---"+fpatient.appointmentList.get(i).from+"---"+fpatient.appointmentList.get(i).to);
-                                        
-                                        }
+                                                                for (int i = 0; i < fpatient.appointmentList.size(); i++)
+                                                                {
+
+                                                                     model.addElement(" --- "+fpatient.appointmentList.get(i).desc+"---"+fpatient.appointmentList.get(i).doctor.doctorName+"---"+fpatient.appointmentList.get(i).date+"---"+fpatient.appointmentList.get(i).from+"---"+fpatient.appointmentList.get(i).to);
+
+                                                                }
                                                                 frame.revalidate();
                                                                
                                                                 
@@ -1027,7 +1029,6 @@ public class AppointmentSystem extends JFrame
                                            
 
                                        jp.add(pane, BorderLayout.NORTH);
-                                       
                                        jp.add(chngButton, BorderLayout.WEST);
                                        jp.add(cancelButton, BorderLayout.EAST);
                                        frame.setContentPane(jp);
@@ -1240,7 +1241,7 @@ public class AppointmentSystem extends JFrame
                                 doctorFrame.add(welcome);
                                 
                                 welcome.setBounds(20,3,260,60);
-                                viewPatientbutton.setBounds(20,40,260,60);
+                                viewPatientbutton.setBounds(20,80,260,60);
                                 doctorFrame.setLayout(null);
                                 doctorFrame.setSize(500,500);
                                 doctorFrame.setVisible(true);
@@ -1390,7 +1391,7 @@ public class AppointmentSystem extends JFrame
                                         jp.add(completeButton, BorderLayout.WEST);
                                         jp.add(cancelButton,BorderLayout.EAST);
                                         frame.setContentPane(jp);
-                                        frame.setSize(700,230);
+                                        frame.setSize(700,530);
                                         frame.setVisible(true);
                                               
                                          }
